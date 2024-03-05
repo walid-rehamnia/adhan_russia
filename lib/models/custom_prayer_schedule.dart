@@ -87,7 +87,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
     //always update the current status
     currentPrayer.status = "now";
-    if (int.parse(this.getRemainingTime()) == 0) {
+    if (getRemainingTime() == '-0:00:00') {
       PrayerNotification.prayerNotification(
           title: "Hello the world", body: "Pray", payload: "p");
     }

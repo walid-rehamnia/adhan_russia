@@ -51,6 +51,9 @@ class PreferencesController extends GetxController {
       case String:
         await prefs.setString(prefName, value);
         break;
+      case String:
+        await prefs.setString(prefName, value);
+        break;
     }
 
     switch (prefName) {
