@@ -34,20 +34,19 @@ class CustomPrayerSchedule extends PrayerSchedule {
     }
 
     //Load current month data if it doesn't exist
-    String month = _preferencesController.calendarMonthlyData.value;
+    String jsonData = _preferencesController.calendarMonthlyData.value;
 
-    if (month == "") {
+    if (jsonData == "") {
       //delete the old data if exists (meory best practice and avoid confusion with other year same month)
       //load the yearly data from json file
       List<List<List<String>>> yearlyData = await loadYearlyData();
       //select the current month data and save it to presistent storage
       List<List<String>> monthlyData = yearlyData[currentMonthIndex];
-      String jsonData = jsonEncode(monthlyData);
+      jsonData = jsonEncode(monthlyData);
       _preferencesController.updatePreference("calendarMonthlyData", jsonData);
     }
 
     //get daily times from monthly saved data
-    String jsonData = month ?? '[]';
     List<dynamic> decodedData = jsonDecode(jsonData);
 
     decodedData = decodedData

@@ -86,14 +86,13 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              tooltip: 'User Position',
                               icon: Icon(
                                 Icons.location_on,
                                 color: MAIN_COLOR,
                                 size: 30.0,
                               ),
                             ),
-                            Text('Location'),
+                            Text(_preferencesController.userLocation.value),
                           ],
                         ),
                       ),
