@@ -1,18 +1,11 @@
-import 'dart:convert';
-
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/time_util.dart';
-import 'package:adan_russia/utils/utils.dart';
 import 'package:adan_russia/utils/utils_location.dart';
-import 'package:adan_russia/utils_data.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:get/utils.dart';
 
 class StandardPrayerSchedule extends PrayerSchedule {
   StandardPrayerSchedule() {
@@ -65,9 +58,9 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
     //always update the current status
     currentPrayer.status = "now";
-    // if (getRemainingTime(now, nextPrayer.time) == 0) {
-    //   PrayerNotification.prayerNotification(
-    //       title: "Hello the world", body: "Pray", payload: "p");
-    // }
+    if (getRemainingTime() == '-0:00:00') {
+      PrayerNotification.prayerNotification(
+          title: "Hello the world", body: "Pray", payload: "p");
+    }
   }
 }

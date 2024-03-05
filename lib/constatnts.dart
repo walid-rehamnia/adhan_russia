@@ -1,4 +1,5 @@
 import 'package:adan_russia/preferences.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'translations/translation_keys.dart' as translation;
@@ -35,3 +36,5 @@ const List<String> GREGORIAN_MONTHS = [
   "November",
   "December",
 ];
+
+Color MAIN_COLOR = Colors.blue;

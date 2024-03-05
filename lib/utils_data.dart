@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:typed_data';
-// import 'package:http/http.dart' as http;
 import 'package:adan_russia/constatnts.dart';
-import 'package:flutter/material.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:quiver/time.dart';
 
@@ -154,14 +150,16 @@ void listLocalFiles() async {
 
 Future<void> checkFirstInstallation() async {
   //Check first installation by year, because the download happens once by year by ignoring location for now
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? year = prefs.getString("year");
+  final PreferencesController _preferencesController =
+      Get.find<PreferencesController>();
+  String? year = _preferencesController.calendarYear.value;
   String currentYear = DateTime.now().year.toString();
-  if (year == null || year != currentYear) {
-    await downloadCalendarData("NN");
-    prefs.setString("year", currentYear);
-    prefs.setString("country", "Russia");
-    prefs.setString("city", "Nizhny Novgorod");
+  if (year == '' || year != currentYear) {
+    await downloadCalendarData("Nizhny_Novgorod");
+    _preferencesController.updatePreference("calendarYear", currentYear);
+    _preferencesController.updatePreference("calendarYear", currentYear);
+    _preferencesController.updatePreference(
+        "userLocation", "Nizhny Novgorod, Russia");
 
     PermissionStatus status = await Permission.notification.request();
     if (status.isGranted) {

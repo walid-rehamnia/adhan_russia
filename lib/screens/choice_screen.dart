@@ -24,7 +24,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ChoiceButton(
-              title: ' Default Mode',
+              title: ' Standard Mode (Anywhere)',
               description:
                   "Calculate the prayer time based on different global used parameters (you will be able to customize them soon in app parameters)",
               onPressed: () async {
@@ -50,7 +50,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
             ),
             const SizedBox(height: 16.0), // Add some spacing between buttons
             ChoiceButton(
-              title: 'Custom Mode (more accurate)',
+              title: 'Custom Mode (more accurate / Limited cities)',
               description:
                   "Bsed on the calendars used in the russian mosques which has been issued from ....., for now it's limited to 'Nizhny Novgorod' city, help us with your city calendars so we'll covers more cities",
               onPressed: () async {

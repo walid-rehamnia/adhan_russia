@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/standard_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/custom_prayer_schedule.dart';
@@ -78,8 +79,36 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("${_prayerSchedule.getRemainingTime()}"),
+                      Center(
+                        child: Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              tooltip: 'User Position',
+                              icon: Icon(
+                                Icons.location_on,
+                                color: MAIN_COLOR,
+                                size: 30.0,
+                              ),
+                            ),
+                            Text('Location'),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        "${_prayerSchedule.getRemainingTime()}",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: MAIN_COLOR,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
                       // Left and right arrow buttons for navigation
 
                       SizedBox(
@@ -94,19 +123,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           width: containerWidth,
                           height: containerHeight,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                                10.0), // Adjust the value as needed
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Colors.black.withOpacity(
-                            //         0.3), // Adjust the shadow color and opacity
-                            //     spreadRadius: 5,
-                            //     blurRadius: 7,
-                            //     offset:
-                            //         Offset(0, 3), // Adjust the shadow offset
-                            //   ),
-                            // ],
-
+                            borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                               image: AssetImage(
                                   'assets/back3.jpg'), // Replace with your image asset

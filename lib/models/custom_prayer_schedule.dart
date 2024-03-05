@@ -4,10 +4,12 @@ import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/prayer_notification.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/time_util.dart';
 import 'package:adan_russia/utils_data.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomPrayerSchedule extends PrayerSchedule {
   CustomPrayerSchedule() {
@@ -15,33 +17,37 @@ class CustomPrayerSchedule extends PrayerSchedule {
   }
 
   Future<void> init(DateTime date) async {
-    var prefs = await SharedPreferences.getInstance();
+    final PreferencesController _preferencesController =
+        Get.find<PreferencesController>();
+
     calendarDate = date;
     //Next 2 indexes used to retrieve data from 0 based index data  structures
     int currentMonthIndex = calendarDate.month - 1;
     int currentDayIndex = calendarDate.day - 1;
 
     //Download calendar if doesn't exist/expired
-    if (prefs.getString("year") != calendarDate.year.toString()) {
-      downloadCalendarData("city");
-      prefs.setString("year", calendarDate.year.toString());
+    String year = _preferencesController.calendarYear.value;
+    if (year != calendarDate.year.toString()) {
+      await downloadCalendarData("Nizhny_Novgorod");
+      _preferencesController.updatePreference(
+          "userLocation", "Nizhny Novgorod, Russia");
     }
 
     //Load current month data if it doesn't exist
-    if (prefs.getString('$currentMonthIndex') == null) {
-      //delete the old data if exists (meory best practice and avoid confusion with other year same month)
-      prefs.remove('${currentMonthIndex - 1}');
+    String month = _preferencesController.calendarMonthlyData.value;
 
+    if (month == "") {
+      //delete the old data if exists (meory best practice and avoid confusion with other year same month)
       //load the yearly data from json file
       List<List<List<String>>> yearlyData = await loadYearlyData();
       //select the current month data and save it to presistent storage
       List<List<String>> monthlyData = yearlyData[currentMonthIndex];
       String jsonData = jsonEncode(monthlyData);
-      prefs.setString('$currentMonthIndex', jsonData);
+      _preferencesController.updatePreference("calendarMonthlyData", jsonData);
     }
 
     //get daily times from monthly saved data
-    String jsonData = prefs.getString('$currentMonthIndex') ?? '[]';
+    String jsonData = month ?? '[]';
     List<dynamic> decodedData = jsonDecode(jsonData);
 
     decodedData = decodedData

@@ -6,9 +6,11 @@ class PreferencesController extends GetxController {
 
 //PrayerSchedule
   RxString calendarYear = ''.obs;
-  RxString calendarMonth = ''.obs;
+  RxString calendarMonthlyData = ''.obs;
 
   RxString locale = ''.obs;
+  RxString userLocation = ''.obs;
+
   RxDouble positionLatitude = 0.0.obs;
   RxDouble positionLongitude = 0.0.obs;
 
@@ -28,11 +30,12 @@ class PreferencesController extends GetxController {
     timingMode.value = prefs.getString('timingMode') ?? '';
     calendarYear.value = prefs.getString('calendarYear') ?? '';
 
-    calendarMonth.value = prefs.getString('calendarYear') ?? '';
+    calendarMonthlyData.value = prefs.getString('calendarYear') ?? '';
 
     locale.value = prefs.getString('locale') ?? '';
-    this.positionLatitude.value = prefs.getDouble('positionLatitude') ?? 0.0;
-    this.positionLongitude.value = prefs.getDouble('positionLongitude') ?? 0.0;
+    userLocation.value = prefs.getString('userLocation') ?? '';
+    positionLatitude.value = prefs.getDouble('positionLatitude') ?? 0.0;
+    positionLongitude.value = prefs.getDouble('positionLongitude') ?? 0.0;
   }
 
   Future<void> updatePreference(String prefName, var value) async {
@@ -57,8 +60,8 @@ class PreferencesController extends GetxController {
       case "calendarYear":
         calendarYear.value = value;
         break;
-      case "calendarMonth":
-        calendarMonth.value = value;
+      case "calendarMonthlyData":
+        calendarMonthlyData.value = value;
         break;
       case "locale":
         locale.value = value;
@@ -68,6 +71,10 @@ class PreferencesController extends GetxController {
         break;
       case "positionLongitude":
         positionLongitude.value = value;
+        break;
+
+      case "userLocation":
+        userLocation.value = value;
         break;
     }
   }

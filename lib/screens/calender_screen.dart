@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:adan_russia/models/custom_prayer_schedule.dart';
-import 'package:adan_russia/prayer_notification.dart';
-import 'package:adan_russia/translations/my_translation.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
