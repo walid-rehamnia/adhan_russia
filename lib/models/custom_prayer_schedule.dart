@@ -91,7 +91,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
     currentPrayer.status = "now";
     if (getRemainingTime() == '-0:00:00') {
       PrayerNotification.prayerNotification(
-          title: "Hello the world", body: "Pray", payload: "p");
+          title: "Adhan", body: "${nextPrayer.name} Prayer", payload: "p");
     }
   }
 }

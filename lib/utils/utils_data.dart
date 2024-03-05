@@ -157,8 +157,6 @@ Future<void> checkFirstInstallation() async {
   if (year == '' || year != currentYear) {
     await downloadCalendarData("Nizhny_Novgorod");
     _preferencesController.updatePreference("calendarYear", currentYear);
-    _preferencesController.updatePreference(
-        "userLocation", "Nizhny Novgorod, Russia");
 
     PermissionStatus status = await Permission.notification.request();
     if (status.isGranted) {

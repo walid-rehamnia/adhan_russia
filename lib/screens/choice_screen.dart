@@ -1,7 +1,9 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/preferences.dart';
+import 'package:adan_russia/utils/utils.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils/utils_data.dart';
+import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,10 +38,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   isLoading = true;
                 });
                 try {
-                  await getCoordinates();
-
-                  preferencesController.updatePreference(
-                      "timingMode", "standard");
+                  await setTimeMode('standard');
                   setState(() {
                     isLoading = false;
                   });
@@ -66,6 +65,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   isLoading = true;
                 });
                 try {
+                  await setTimeMode('standard');
+
                   await checkFirstInstallation();
                   preferencesController.updatePreference(
                       "timingMode", "custom");
