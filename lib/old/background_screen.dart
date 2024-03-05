@@ -4,7 +4,7 @@ import 'package:adan_russia/models.dart';
 
 class BackGroundWidget extends StatelessWidget {
   BackGroundWidget(this.currentPrayer, {Key? key}) : super(key: key);
-  final Prayer? currentPrayer;
+  final MyPrayer? currentPrayer;
 
   var image = "assets/5.jpg";
 

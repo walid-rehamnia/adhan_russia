@@ -1,10 +1,8 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/preferences.dart';
-import 'package:adan_russia/screens/test.dart';
-import 'package:adan_russia/utils_data.dart';
+import 'package:adan_russia/screens/choice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,14 +10,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late Future<void> _downloadFiles;
   late Future<String?> _defaultMode;
 
   @override
   void initState() {
     super.initState();
     _defaultMode = getDefaultMode();
-    // _downloadFiles = checkFirstInstallation();
   }
 
   @override
@@ -34,12 +30,22 @@ class _SplashScreenState extends State<SplashScreen> {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               // Show an error message if file download fails
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(snapshot.error.toString()),
+                  duration: Duration(seconds: 3),
+                ),
+              );
               return Text('Error: ${snapshot.error}');
             } else {
-              if (snapshot.hasData) {
+              if (snapshot.hasData && snapshot.data.toString() != "") {
+                print('YESSSSS');
+                print(snapshot.data.toString());
                 return MyBottomNavigationBar();
               } else {
-                return ModeChoiceScreen();
+                print('NOOOOOO');
+
+                return ChoiceScreen();
               }
             }
           },
@@ -52,6 +58,5 @@ class _SplashScreenState extends State<SplashScreen> {
 Future<String?> getDefaultMode() async {
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
-  var prefs = await SharedPreferences.getInstance();
-  return prefs.getString(preferencesController.timingMode.value);
+  return preferencesController.timingMode.value;
 }

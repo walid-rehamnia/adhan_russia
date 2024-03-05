@@ -37,7 +37,19 @@ class PreferencesController extends GetxController {
 
   Future<void> updatePreference(String prefName, var value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(prefName, value);
+
+    switch (value.runtimeType) {
+      case int:
+        await prefs.setInt(prefName, value);
+        break;
+      case double:
+        await prefs.setDouble(prefName, value);
+        break;
+      case String:
+        await prefs.setString(prefName, value);
+        break;
+    }
+
     switch (prefName) {
       case "timingMode":
         timingMode.value = value;

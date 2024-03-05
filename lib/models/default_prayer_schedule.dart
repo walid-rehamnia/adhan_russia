@@ -2,16 +2,23 @@ import 'dart:convert';
 
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/prayer.dart';
-import 'package:adan_russia/notifications.dart';
+import 'package:adan_russia/models/prayer_schedule.dart';
+import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/time_util.dart';
+import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils_data.dart';
+import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/timezone.dart' as tz;
 
-class DefaultPrayerSchedule {
-  late List<Prayer> prayers;
-  late Prayer currentPrayer;
-  late Prayer nextPrayer;
+class DefaultPrayerSchedule extends PrayerSchedule {
+  late PrayerTimes prayerTimes;
+
+  late final List<String> todayTimes;
+  late List<MyPrayer> prayers;
+  late MyPrayer currentPrayer;
+  late MyPrayer nextPrayer;
   late String remainingTime;
 
   late DateTime calendarDate;
@@ -19,61 +26,62 @@ class DefaultPrayerSchedule {
   DefaultPrayerSchedule() {
     prayers = [];
   }
-
+  @override
   Future<void> init(DateTime date) async {
-    var prefs = await SharedPreferences.getInstance();
+    print('My Prayer Times');
     calendarDate = date;
-    //Next 2 indexes used to retrieve data from 0 based index data  structures
-    int currentMonthIndex = calendarDate.month - 1;
-    int currentDayIndex = calendarDate.day - 1;
+    final Coordinates myCoordinates = await getCoordinates();
+    final params = CalculationMethod.karachi.getParameters();
+    params.madhab = Madhab.hanafi;
+    prayerTimes = PrayerTimes.today(myCoordinates, params);
 
-    //get daily times from monthly saved data
-    String jsonData = prefs.getString('$currentMonthIndex') ?? '[]';
-    List<dynamic> decodedData = jsonDecode(jsonData);
+    // final nyUtcOffset = Duration(hours: 3);
+    // final nyDate = DateComponents(2024, 3, 5);
+    // final nyParams = CalculationMethod.north_america.getParameters();
+    // nyParams.madhab = Madhab.hanafi;
+    // prayerTimes =
+    //     PrayerTimes(myCoordinates, nyDate, nyParams, utcOffset: nyUtcOffset);
 
-    decodedData = decodedData
-        .map((innerList) => (innerList as List<dynamic>)
-            .map((element) => element.toString())
-            .toList())
-        .toList();
-    List<String> todayTimes = decodedData[currentDayIndex];
-
-    //ensure the avoidness of prayers before adding to it
+    print(
+        "---Today's Prayer Times in Your Local Timezone:(${prayerTimes.fajr.timeZoneName})---");
+    print(prayerTimes);
+    todayTimes = [
+      DateFormat.Hm().format(prayerTimes.fajr),
+      DateFormat.Hm().format(prayerTimes.sunrise),
+      DateFormat.Hm().format(prayerTimes.dhuhr),
+      DateFormat.Hm().format(prayerTimes.asr),
+      DateFormat.Hm().format(prayerTimes.maghrib),
+      DateFormat.Hm().format(prayerTimes.isha),
+    ];
     prayers.clear();
     for (int i = 0; i < todayTimes.length; i++) {
-      prayers.add(Prayer(todayTimes[i], PRAYER_NAMES[i], i));
+      prayers.add(MyPrayer(todayTimes[i], PRAYER_NAMES[i], i));
     }
   }
 
+  @override
   void update() {
     DateTime now = DateTime.now();
-    //refrech our calendarer times if they expired
-    // if (now.day != calendarDate.day) init(now);
+    currentPrayer = prayers[prayerTimes.currentPrayer().index - 1];
+    nextPrayer = prayers[prayerTimes.nextPrayer().index - 1];
+    remainingTime = (intFromTime(DateFormat("HH:mm").parse(nextPrayer.time)) -
+            intFromTime(now))
+        .toString();
 
     int i = 0;
     for (i = 0; i < prayers.length; i++) {
-      if (intFromTime(now) <=
+      if (intFromTime(now) ==
           intFromTime(DateFormat("HH:mm").parse(prayers[i].time))) {
-        nextPrayer = prayers[i];
-        remainingTime =
-            (intFromTime(DateFormat("HH:mm").parse(prayers[i].time)) -
-                    intFromTime(now))
-                .toString();
-        currentPrayer = i > 0 ? prayers[i - 1] : prayers[prayers.length - 1];
-        break;
-      } else {
+        prayers[i].status = "now";
+      } else if (intFromTime(now) >
+          intFromTime(DateFormat("HH:mm").parse(prayers[i].time))) {
         prayers[i].status = "passed";
       }
-    }
-    //In case I didn't found current/next prayer yet
-    if (i == prayers.length) {
-      currentPrayer = prayers[5];
-      nextPrayer = prayers[0];
     }
 
     //always update the current status
     currentPrayer.status = "now";
-    if (int.parse(this.remainingTime) == 0) {
+    if (int.parse(remainingTime) == 0) {
       PrayerNotification.prayerNotification(
           title: "Hello the world", body: "Pray", payload: "p");
     }

@@ -1,15 +1,11 @@
-import 'package:adan_russia/components.dart';
-import 'package:adan_russia/constatnts.dart';
-import 'package:adan_russia/notifications.dart';
+import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/splash_screen.dart';
 import 'package:adan_russia/translations/my_translation.dart';
-import 'package:adan_russia/utils_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:adan_russia/pref.dart';
 import 'package:get/get.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

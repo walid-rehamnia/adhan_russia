@@ -27,13 +27,13 @@ import 'package:adan_russia/models/prayer.dart';
 class PrayerDate {
   PrayerDate(this.date, this.prayers);
 
-  List<Prayer> prayers;
+  List<MyPrayer> prayers;
   String date;
 
   factory PrayerDate.fromJson(Map<String, dynamic> json) {
-    List<Prayer> prayers = [];
+    List<MyPrayer> prayers = [];
     (json["timings"] as Map<String, dynamic>).forEach((key, value) {
-      prayers.add(Prayer(value, key, 0));
+      prayers.add(MyPrayer(value, key, 0));
     });
     var dateGregorianModel = (json["date"] as Map<String, dynamic>)["gregorian"]
         as Map<String, dynamic>;
@@ -41,14 +41,14 @@ class PrayerDate {
   }
 
   factory PrayerDate.fromJsonPrf(Map<String, dynamic> value) {
-    List<Prayer> prayers = [];
-    prayers.add(Prayer(value["time"], value["title"], value["selected"]));
+    List<MyPrayer> prayers = [];
+    prayers.add(MyPrayer(value["time"], value["title"], value["selected"]));
     return PrayerDate(value["date"], prayers);
   }
 
   Map<String, dynamic> toJson() => {
         'prayers':
-            jsonEncode(prayers, toEncodable: (e) => (e as Prayer).toJson()),
+            jsonEncode(prayers, toEncodable: (e) => (e as MyPrayer).toJson()),
         'date': date,
       };
 }

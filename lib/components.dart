@@ -1,12 +1,12 @@
 import 'package:adan_russia/controllers.dart';
 import 'package:adan_russia/models/prayer.dart';
-import 'package:adan_russia/models/prayer_schedule.dart';
+import 'package:adan_russia/models/custom_prayer_schedule.dart';
 import 'package:adan_russia/screens/about_page.dart';
 import 'package:adan_russia/screens/calendar_screen2.dart';
 import 'package:adan_russia/screens/pdf_page.dart';
 import 'package:adan_russia/screens/settings_page.dart';
 import 'package:adan_russia/screens/count_down.dart';
-import 'package:adan_russia/screens/test.dart';
+import 'package:adan_russia/screens/choice_screen.dart';
 import 'package:adan_russia/translations/translation_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:adan_russia/screens/calender_screen.dart';
@@ -102,7 +102,7 @@ Widget insideLoader(String reminderTime, String nextPrayerTitle) => Column(
       ],
     );
 
-Widget timeWithTitle(Prayer prayer, double screenHeight) {
+Widget timeWithTitle(MyPrayer prayer, double screenHeight) {
   return Container(
     margin: EdgeInsets.only(top: screenHeight / 55, bottom: screenHeight / 55),
     child: Column(
@@ -137,7 +137,7 @@ Widget timeWithTitle(Prayer prayer, double screenHeight) {
 }
 
 Widget listOfTimes(
-    List<Prayer> prayers, double screenHeight, double screenWidth) {
+    List<MyPrayer> prayers, double screenHeight, double screenWidth) {
   return Row(
     children: [
       Column(
@@ -164,7 +164,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   // Initialize the controller
   final List<Widget> pages = [
     const CalendarScreen(),
-    ModeChoiceScreen(),
+    ChoiceScreen(),
     PrayerScreen()
   ];
 

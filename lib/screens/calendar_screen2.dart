@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:adan_russia/models/default_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer.dart';
+import 'package:adan_russia/models/custom_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/pdf_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,13 +19,22 @@ class PrayerScreen extends StatefulWidget {
 class _PrayerScreenState extends State<PrayerScreen> {
   late Timer timer;
   bool isLoading = true;
-  late List<Prayer> prayers;
+  late List<MyPrayer> prayers;
   late bool isTodayCalendar;
-  CustomPrayerSchedule _prayerSchedule = CustomPrayerSchedule();
+  late PrayerSchedule _prayerSchedule;
+  late PreferencesController _preferencesController;
+  late final String timingMode;
+
   @override
   void initState() {
     super.initState();
-    _prayerSchedule = CustomPrayerSchedule();
+    _preferencesController = Get.find<PreferencesController>();
+    timingMode = _preferencesController.timingMode.value;
+    if (timingMode == 'custom') {
+      _prayerSchedule = CustomPrayerSchedule();
+    } else {
+      _prayerSchedule = DefaultPrayerSchedule();
+    }
 
     _prayerSchedule.init(DateTime.now()).then((value) {
       _prayerSchedule.update();
@@ -44,6 +56,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double containerWidth = MediaQuery.of(context).size.width * 0.9;
+    double containerHeight = MediaQuery.of(context).size.height * 0.6;
     return Scaffold(
       body: SafeArea(
         child: isLoading == true
@@ -56,7 +70,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(
-                          0.35), // Adjust the opacity here (0.0 to 1.0)
+                          1), // Adjust the opacity here (0.0 to 1.0)
                       BlendMode.dstATop,
                     ),
                   ),
@@ -66,87 +80,97 @@ class _PrayerScreenState extends State<PrayerScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("${_prayerSchedule.remainingTime}"),
-
                       // Left and right arrow buttons for navigation
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.arrow_left),
-                            onPressed: () {
-                              _navigateToDay(-1);
-                            },
-                          ),
-                          Column(
-                            children: [
-                              for (String text
-                                  in _getFormattedDate(currentIndex))
-                                Text(
-                                  text,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                            ],
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.arrow_right),
-                            onPressed: () {
-                              _navigateToDay(1);
-                            },
-                          ),
-                        ],
-                      ),
+
                       SizedBox(
                         height: 20,
                       ),
-                      isTodayCalendar
-                          ? IconButton(
-                              iconSize: 30,
-                              icon: const Icon(Icons.calendar_month_rounded),
-                              onPressed: () {
-                                Get.to(PDFViewerPage());
-                              },
-                            )
-                          : IconButton(
-                              iconSize: 30,
-                              icon: const Icon(
-                                  Icons.settings_backup_restore_rounded),
-                              onPressed: () {
-                                currentIndex = 0;
-                                _prayerSchedule.init(DateTime.now());
-                              },
-                            ),
+
                       SizedBox(
                         height: 20,
                       ),
                       // Display the DataTable
-                      DataTable(
-                        columns: [
-                          DataColumn(label: Text('Prayer Name')),
-                          DataColumn(label: Text('Prayer Time')),
-                          DataColumn(label: Text('Is done')),
-                        ],
-                        rows: prayers.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final prayer = entry.value;
-                          // final isSelected = index ==2; // Change this to the index of the current prayer
-                          final isSelected = isTodayCalendar &&
-                              (prayer.name == _prayerSchedule.nextPrayer.name);
-                          return DataRow(
-                            selected: isSelected,
-                            cells: [
-                              DataCell(Text(prayer.name)),
-                              DataCell(Text(prayer.time)),
-                              DataCell(Checkbox(
-                                  value: isTodayCalendar &&
-                                      (prayer.status == 'now' ||
-                                          prayer.status == 'passed'),
-                                  onChanged: (bool? value) {})),
+                      Container(
+                          width: containerWidth,
+                          height: containerHeight,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the value as needed
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.black.withOpacity(
+                            //         0.3), // Adjust the shadow color and opacity
+                            //     spreadRadius: 5,
+                            //     blurRadius: 7,
+                            //     offset:
+                            //         Offset(0, 3), // Adjust the shadow offset
+                            //   ),
+                            // ],
+
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/back3.jpg'), // Replace with your image asset
+                              fit: BoxFit.cover,
+
+                              colorFilter: ColorFilter.mode(
+                                Colors.black.withOpacity(
+                                    0.5), // Adjust the opacity here (0.0 to 1.0)
+                                BlendMode.dstATop,
+                              ),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              this.timingMode == 'custom'
+                                  ? customCalendarHeader()
+                                  : defaultCalendarHeader(),
+                              SizedBox(height: 10),
+                              DataTable(
+                                columns: [
+                                  DataColumn(
+                                    label: Text('Prayer'),
+                                    numeric: true,
+                                  ),
+                                  DataColumn(
+                                    label: Container(
+                                      child: Text('Adhan time'),
+                                    ),
+                                    numeric: true,
+                                  ),
+                                  DataColumn(
+                                    label: Text('Is passed'),
+                                    numeric: true,
+                                  ),
+                                ],
+                                dividerThickness: 1.5,
+                                dataTextStyle: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                                rows: prayers.asMap().entries.map((entry) {
+                                  final index = entry.key;
+                                  final prayer = entry.value;
+                                  // final isSelected = index ==2; // Change this to the index of the current prayer
+                                  final isSelected = isTodayCalendar &&
+                                      (prayer.name ==
+                                          _prayerSchedule.nextPrayer.name);
+                                  return DataRow(
+                                    selected: isSelected,
+                                    cells: [
+                                      DataCell(Text(prayer.name)),
+                                      DataCell(Text(prayer.time)),
+                                      DataCell(Checkbox(
+                                          value: isTodayCalendar &&
+                                              (prayer.status == 'now' ||
+                                                  prayer.status == 'passed'),
+                                          onChanged: (bool? value) {})),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
                             ],
-                          );
-                        }).toList(),
-                      ),
+                          )),
                       SizedBox(height: 20),
                     ],
                   ),
@@ -156,7 +180,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     );
   }
 
-  void _update(CustomPrayerSchedule prayerSchedule) {
+  void _update(PrayerSchedule prayerSchedule) {
     try {
       setState(() {
         prayerSchedule.update();
@@ -233,5 +257,71 @@ class _PrayerScreenState extends State<PrayerScreen> {
       print(navigatedDate);
       _prayerSchedule.init(navigatedDate);
     });
+  }
+
+  Widget customCalendarHeader() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_left),
+              onPressed: () {
+                _navigateToDay(-1);
+              },
+            ),
+            Column(
+              children: [
+                for (String text in _getFormattedDate(currentIndex))
+                  Text(
+                    text,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+              ],
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_right),
+              onPressed: () {
+                _navigateToDay(1);
+              },
+            ),
+          ],
+        ),
+        isTodayCalendar
+            ? IconButton(
+                iconSize: 30,
+                icon: const Icon(Icons.calendar_month_rounded),
+                onPressed: () {
+                  Get.to(PDFViewerPage());
+                },
+              )
+            : IconButton(
+                iconSize: 30,
+                icon: const Icon(Icons.settings_backup_restore_rounded),
+                onPressed: () {
+                  currentIndex = 0;
+                  _prayerSchedule.init(DateTime.now());
+                },
+              ),
+      ],
+    );
+  }
+
+  Widget defaultCalendarHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            for (String text in _getFormattedDate(currentIndex))
+              Text(
+                text,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+          ],
+        ),
+      ],
+    );
   }
 }

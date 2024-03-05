@@ -1,4 +1,4 @@
-class Prayer {
+class MyPrayer {
   String time;
   String name;
   String status = "upcoming"; // now, upcoming, final
@@ -6,7 +6,7 @@ class Prayer {
 
   // Prayer({this.time = "N/A", this.title = "Prayer", this.selected = false});
 
-  Prayer(this.time, this.name, this.index);
+  MyPrayer(this.time, this.name, this.index);
 
   Map<String, dynamic> toJson() => {
         'time': time,

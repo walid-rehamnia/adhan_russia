@@ -1,6 +1,6 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/models/prayer.dart';
-import 'package:adan_russia/models/prayer_schedule.dart';
+import 'package:adan_russia/models/custom_prayer_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:adan_russia/screens/calender_screen.dart';
 import 'package:adan_russia/models.dart';
