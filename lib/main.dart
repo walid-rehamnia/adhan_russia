@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'Adan Russia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: Colors.blue, // Set the primary color
         primarySwatch: Colors.green,
       ),
       translations: MyTranslations(),

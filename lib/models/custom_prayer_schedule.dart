@@ -10,13 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomPrayerSchedule extends PrayerSchedule {
-  late List<MyPrayer> prayers;
-  late MyPrayer currentPrayer;
-  late MyPrayer nextPrayer;
-  late String remainingTime;
-
-  late DateTime calendarDate;
-
   CustomPrayerSchedule() {
     prayers = [];
   }
@@ -66,7 +59,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
   }
 
   void update() {
-    DateTime now = DateTime.now();
+    now = DateTime.now();
     //refrech our calendarer times if they expired
     // if (now.day != calendarDate.day) init(now);
 
@@ -75,10 +68,6 @@ class CustomPrayerSchedule extends PrayerSchedule {
       if (intFromTime(now) <=
           intFromTime(DateFormat("HH:mm").parse(prayers[i].time))) {
         nextPrayer = prayers[i];
-        remainingTime =
-            (intFromTime(DateFormat("HH:mm").parse(prayers[i].time)) -
-                    intFromTime(now))
-                .toString();
         currentPrayer = i > 0 ? prayers[i - 1] : prayers[prayers.length - 1];
         break;
       } else {
@@ -93,7 +82,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
     //always update the current status
     currentPrayer.status = "now";
-    if (int.parse(this.remainingTime) == 0) {
+    if (int.parse(this.getRemainingTime()) == 0) {
       PrayerNotification.prayerNotification(
           title: "Hello the world", body: "Pray", payload: "p");
     }

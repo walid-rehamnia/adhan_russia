@@ -5,27 +5,20 @@ import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/time_util.dart';
+import 'package:adan_russia/utils/utils.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils_data.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:get/utils.dart';
 
-class DefaultPrayerSchedule extends PrayerSchedule {
-  late PrayerTimes prayerTimes;
-
-  late final List<String> todayTimes;
-  late List<MyPrayer> prayers;
-  late MyPrayer currentPrayer;
-  late MyPrayer nextPrayer;
-  late String remainingTime;
-
-  late DateTime calendarDate;
-
-  DefaultPrayerSchedule() {
+class StandardPrayerSchedule extends PrayerSchedule {
+  StandardPrayerSchedule() {
     prayers = [];
   }
+
   @override
   Future<void> init(DateTime date) async {
     print('My Prayer Times');
@@ -34,13 +27,6 @@ class DefaultPrayerSchedule extends PrayerSchedule {
     final params = CalculationMethod.karachi.getParameters();
     params.madhab = Madhab.hanafi;
     prayerTimes = PrayerTimes.today(myCoordinates, params);
-
-    // final nyUtcOffset = Duration(hours: 3);
-    // final nyDate = DateComponents(2024, 3, 5);
-    // final nyParams = CalculationMethod.north_america.getParameters();
-    // nyParams.madhab = Madhab.hanafi;
-    // prayerTimes =
-    //     PrayerTimes(myCoordinates, nyDate, nyParams, utcOffset: nyUtcOffset);
 
     print(
         "---Today's Prayer Times in Your Local Timezone:(${prayerTimes.fajr.timeZoneName})---");
@@ -61,12 +47,10 @@ class DefaultPrayerSchedule extends PrayerSchedule {
 
   @override
   void update() {
-    DateTime now = DateTime.now();
+    now = DateTime.now();
     currentPrayer = prayers[prayerTimes.currentPrayer().index - 1];
     nextPrayer = prayers[prayerTimes.nextPrayer().index - 1];
-    remainingTime = (intFromTime(DateFormat("HH:mm").parse(nextPrayer.time)) -
-            intFromTime(now))
-        .toString();
+    // print(nextPrayer.time + ':00');
 
     int i = 0;
     for (i = 0; i < prayers.length; i++) {
@@ -81,9 +65,9 @@ class DefaultPrayerSchedule extends PrayerSchedule {
 
     //always update the current status
     currentPrayer.status = "now";
-    if (int.parse(remainingTime) == 0) {
-      PrayerNotification.prayerNotification(
-          title: "Hello the world", body: "Pray", payload: "p");
-    }
+    // if (getRemainingTime(now, nextPrayer.time) == 0) {
+    //   PrayerNotification.prayerNotification(
+    //       title: "Hello the world", body: "Pray", payload: "p");
+    // }
   }
 }

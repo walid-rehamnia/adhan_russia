@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:adan_russia/models/default_prayer_schedule.dart';
+import 'package:adan_russia/models/standard_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/custom_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
@@ -33,7 +33,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     if (timingMode == 'custom') {
       _prayerSchedule = CustomPrayerSchedule();
     } else {
-      _prayerSchedule = DefaultPrayerSchedule();
+      _prayerSchedule = StandardPrayerSchedule();
     }
 
     _prayerSchedule.init(DateTime.now()).then((value) {
@@ -79,7 +79,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("${_prayerSchedule.remainingTime}"),
+                      Text("${_prayerSchedule.getRemainingTime()}"),
                       // Left and right arrow buttons for navigation
 
                       SizedBox(
@@ -186,7 +186,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
         prayerSchedule.update();
         isTodayCalendar = DateTime.now().day == prayerSchedule.calendarDate.day;
         print(
-            "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.remainingTime}");
+            "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
       });
     } catch (e) {
       // Handle errors here

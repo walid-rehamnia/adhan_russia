@@ -79,7 +79,7 @@ Widget loaderWidget(double screenHeight, CustomPrayerSchedule prayerSchedule) =>
           backgroundWidth: 10.0,
           percent: progress(prayerSchedule.currentPrayer.time,
               prayerSchedule.nextPrayer.time),
-          center: insideLoader(prayerSchedule.remainingTime.toString(),
+          center: insideLoader(prayerSchedule.getRemainingTime(),
               prayerSchedule.nextPrayer.name),
           animation: !firstTime,
           animationDuration: 3000,

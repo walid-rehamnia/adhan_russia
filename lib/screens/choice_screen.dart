@@ -13,6 +13,7 @@ class ChoiceScreen extends StatefulWidget {
 
 class _ChoiceScreenState extends State<ChoiceScreen> {
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -22,35 +23,6 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                      'assets/back1.jpg'), // Replace with your image asset
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: DataTable(
-                columns: [
-                  DataColumn(label: Text('Name')),
-                  DataColumn(label: Text('Age')),
-                  DataColumn(label: Text('Country')),
-                ],
-                rows: [
-                  DataRow(cells: [
-                    DataCell(Text('John Doe')),
-                    DataCell(Text('28')),
-                    DataCell(Text('USA')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('Jane Smith')),
-                    DataCell(Text('35')),
-                    DataCell(Text('Canada')),
-                  ]),
-                ],
-              ),
-            ),
-
             ChoiceButton(
               title: ' Default Mode',
               description:
@@ -70,13 +42,13 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(e.toString()),
-                      duration: Duration(seconds: 3),
+                      duration: const Duration(seconds: 3),
                     ),
                   );
                 }
               },
             ),
-            SizedBox(height: 16.0), // Add some spacing between buttons
+            const SizedBox(height: 16.0), // Add some spacing between buttons
             ChoiceButton(
               title: 'Custom Mode (more accurate)',
               description:
@@ -96,7 +68,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(e.toString()),
-                      duration: Duration(seconds: 3),
+                      duration: const Duration(seconds: 3),
                     ),
                   );
                 }
@@ -115,6 +87,7 @@ class ChoiceButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const ChoiceButton({
+    super.key,
     required this.title,
     required this.description,
     required this.onPressed,
@@ -125,7 +98,7 @@ class ChoiceButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         // primary: Colors.blue, // Set button color
         // onPrimary: Colors.white, // Set text color
         shape: RoundedRectangleBorder(
@@ -144,7 +117,7 @@ class ChoiceButton extends StatelessWidget {
           SizedBox(height: 12.0),
           Text(
             description,
-            style: TextStyle(fontSize: 16.0),
+            style: const TextStyle(fontSize: 16.0),
           ),
         ],
       ),

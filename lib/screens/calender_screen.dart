@@ -105,7 +105,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       setState(() {
         prayerSchedule.update();
         print(
-            "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.remainingTime}");
+            "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
       });
     } catch (e) {
       // Handle errors here
