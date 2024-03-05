@@ -13,6 +13,7 @@ class PrayerSchedule {
   late DateTime calendarDate;
   late DateTime now; // I've declared it here to reduce for memory efficiency
   late int prayerIndex;
+  late DateTime prayerDateTime;
 
   PrayerSchedule() {
     prayers = [];
@@ -26,8 +27,17 @@ class PrayerSchedule {
     durationHours = int.parse(nextPrayer.time.split(":")[0]);
     durationMinutes = int.parse(nextPrayer.time.split(":")[1]);
 
-    DateTime customDateTime = DateTime(
-        now.year, now.month, now.day, durationHours, durationMinutes, 0);
-    return now.difference(customDateTime).toString().split('.')[0];
+    if (nextPrayer.index == 0) {
+      DateTime tomorrowDateTime = now.add(Duration(days: 1));
+      prayerDateTime = DateTime(tomorrowDateTime.year, tomorrowDateTime.month,
+          tomorrowDateTime.day, durationHours, durationMinutes, 0);
+    } else {
+      prayerDateTime = DateTime(
+          now.year, now.month, now.day, durationHours, durationMinutes, 0);
+    }
+
+    //if Subh
+
+    return now.difference(prayerDateTime).toString().split('.')[0];
   }
 }

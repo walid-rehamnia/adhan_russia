@@ -1,7 +1,9 @@
 import 'package:adan_russia/constatnts.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -16,8 +18,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late final PreferencesController _preferencesController;
   // Radio choices
-  String selectedRadio = 'Option 1';
+  late final String selectedRadio;
 
   // Checkbox options
   bool enableFeature1 = false;
@@ -27,13 +30,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   double sliderValue = 50.0;
 
   // Current location
-  String currentLocation = 'Unknown';
+  late final String currentLocation;
 
   // Loading indicator
   bool isLoading = false;
 
   // Application language
-  String currentLanguage = 'English';
+  late String currentLanguage = 'English';
+
+  @override
+  void initState() {
+    _preferencesController = Get.find<PreferencesController>();
+
+    selectedRadio = _preferencesController.timingMode.value;
+    currentLocation = _preferencesController.userLocation.value;
+    print('**********************');
+    print(_preferencesController.locale.value);
+
+    // TODO: implement initState
+    super.initState();
+  }
+
   // Function to save the settings
   void saveSettings() {
     // Implement your logic to save the settings here
@@ -46,8 +63,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       setState(() {
         isLoading = true;
       });
-
-      simulateAsyncFunction();
 
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
@@ -83,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (String? newValue) {
                   changeLanguage(newValue!);
                 },
-                items: <String>['English', 'Spanish', 'French', 'German']
+                items: <String>['Arabic', 'English', 'Russian']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -96,22 +111,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               RadioListTile(
-                title: Text('Option 1'),
-                value: 'Option 1',
+                title: Text('Standard Mode (Anywhere)'),
+                value: 'standard',
                 groupValue: selectedRadio,
                 onChanged: (value) {
                   setState(() {
-                    selectedRadio = "value";
+                    selectedRadio = value!;
                   });
                 },
               ),
               RadioListTile(
-                title: Text('Option 2'),
-                value: 'Option 2',
+                title: Text('Custom Mode (More accurate / Restricted cities)'),
+                value: 'custom',
                 groupValue: selectedRadio,
                 onChanged: (value) {
                   setState(() {
-                    selectedRadio = "value";
+                    selectedRadio = value!;
                   });
                 },
               ),
@@ -143,8 +158,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onPressed: () async {
                   await getCoordinates();
                 },
-                child:
-                    isLoading ? CircularProgressIndicator() : Text('Location'),
+                child: isLoading
+                    ? CircularProgressIndicator(color: MAIN_COLOR1)
+                    : Text('Location'),
               ),
               SizedBox(height: 8),
               Text('Current Location: $currentLocation'),
@@ -161,20 +177,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
-}
-
-Future<void> simulateAsyncFunction() async {
-  print('Start of the asynchronous function');
-
-  // Simulating an asynchronous operation with a delay
-  await Future.delayed(Duration(seconds: 5));
-
-  print('After delay of 2 seconds');
-
-  // Simulating another asynchronous operation
-  await Future.delayed(Duration(seconds: 1));
-
-  print('End of the asynchronous function');
 }
 
 changeLanguage(String? s) {}

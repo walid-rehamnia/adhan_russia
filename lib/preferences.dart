@@ -30,7 +30,7 @@ class PreferencesController extends GetxController {
     timingMode.value = prefs.getString('timingMode') ?? '';
     calendarYear.value = prefs.getString('calendarYear') ?? '';
 
-    calendarMonthlyData.value = prefs.getString('calendarYear') ?? '';
+    calendarMonthlyData.value = prefs.getString('calendarMonthlyData') ?? '';
 
     locale.value = prefs.getString('locale') ?? '';
     userLocation.value = prefs.getString('userLocation') ?? '';
