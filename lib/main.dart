@@ -4,7 +4,6 @@ import 'package:adan_russia/screens/splash_screen.dart';
 import 'package:adan_russia/translations/my_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:adan_russia/pref.dart';
 import 'package:get/get.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +18,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await Prefs.init();
   Get.put(PreferencesController());
 
   await setLocale();
@@ -44,7 +42,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       translations: MyTranslations(),
-      // locale: Get.locale,
+      locale: Get.locale,
       fallbackLocale: const Locale('en', 'US'),
       home: SplashScreen(),
     );

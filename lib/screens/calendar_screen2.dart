@@ -13,6 +13,8 @@ import 'package:intl/intl.dart';
 import 'package:jhijri/_src/_jHijri.dart';
 
 class PrayerScreen extends StatefulWidget {
+  const PrayerScreen({super.key});
+
   @override
   _PrayerScreenState createState() => _PrayerScreenState();
 }
@@ -88,7 +90,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               onPressed: () {},
                               icon: Icon(
                                 Icons.location_on,
-                                color: MAIN_COLOR,
+                                color: MAIN_COLOR1,
                                 size: 30.0,
                               ),
                             ),
@@ -104,7 +106,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
-                          color: MAIN_COLOR,
+                          color: MAIN_COLOR1,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -174,7 +176,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                   return DataRow(
                                     selected: isSelected,
                                     cells: [
-                                      DataCell(Text(prayer.name)),
+                                      DataCell(Text(prayer.name.tr)),
                                       DataCell(Text(prayer.time)),
                                       DataCell(Checkbox(
                                           value: isTodayCalendar &&

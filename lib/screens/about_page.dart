@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:adan_russia/screens/calender_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +51,7 @@ Widget aboutMe(context) {
                 const Text("تطبيق ميقاتي لمواعيد الصلاة"),
                 const Text("تقبل الله طاعتكم"),
                 const Text("تم تصميم  و تطوير التطبيق من قبل شركة"),
-                const Text("Sky Services Group", style: secondTextStyle),
+                const Text("Sky Services Group"),
                 const Text(
                     "المختصة بتطوير التطبيقات و مواقع الويب و الاستضافة"),
                 const SizedBox(height: 12),

@@ -1,6 +1,7 @@
 import 'package:adan_russia/components.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/utils/utils_location.dart';
-import 'package:adan_russia/utils_data.dart';
+import 'package:adan_russia/utils/utils_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,8 @@ class ChoiceScreen extends StatefulWidget {
 
 class _ChoiceScreenState extends State<ChoiceScreen> {
   bool isLoading = false;
+  PreferencesController preferencesController =
+      Get.find<PreferencesController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +37,13 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                 });
                 try {
                   await getCoordinates();
+
+                  preferencesController.updatePreference(
+                      "timingMode", "standard");
                   setState(() {
                     isLoading = false;
                   });
+
                   Get.to(() => MyBottomNavigationBar());
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -60,6 +67,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                 });
                 try {
                   await checkFirstInstallation();
+                  preferencesController.updatePreference(
+                      "timingMode", "custom");
                   setState(() {
                     isLoading = false;
                   });

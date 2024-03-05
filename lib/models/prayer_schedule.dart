@@ -12,6 +12,7 @@ class PrayerSchedule {
   late int durationMinutes;
   late DateTime calendarDate;
   late DateTime now; // I've declared it here to reduce for memory efficiency
+  late int prayerIndex;
 
   PrayerSchedule() {
     prayers = [];

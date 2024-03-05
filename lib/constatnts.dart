@@ -37,4 +37,7 @@ const List<String> GREGORIAN_MONTHS = [
   "December",
 ];
 
-Color MAIN_COLOR = Colors.blue;
+MaterialColor? MAIN_COLOR1 = Colors.blue;
+Color MAIN_COLOR2 = Colors.blue;
+
+String APP_NAME = "Adhan Russia";

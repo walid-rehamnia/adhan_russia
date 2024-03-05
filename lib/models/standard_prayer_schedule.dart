@@ -2,7 +2,7 @@ import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/prayer_notification.dart';
-import 'package:adan_russia/time_util.dart';
+import 'package:adan_russia/utils/time_util.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
@@ -40,9 +40,19 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
   @override
   void update() {
+    print('################');
     now = DateTime.now();
-    currentPrayer = prayers[prayerTimes.currentPrayer().index - 1];
-    nextPrayer = prayers[prayerTimes.nextPrayer().index - 1];
+    print(prayerTimes.nextPrayer());
+    print((prayerTimes.nextPrayer().index - 1).abs());
+    print(prayerTimes.currentPrayer().index - 1);
+
+    prayerIndex = prayerTimes.currentPrayer().index;
+    //return Ischa (cyclic table in my logic =>Subh comes after ischa in index), If index is 0 return Isha
+    currentPrayer = prayerIndex != 0 ? prayers[prayerIndex - 1] : prayers[5];
+    //mapping from package indexes to my indexes, if index is 0 return Fadjr
+    prayerIndex = prayerTimes.nextPrayer().index;
+    nextPrayer = prayerIndex != 0 ? prayers[prayerIndex - 1] : prayers[0];
+
     // print(nextPrayer.time + ':00');
 
     int i = 0;

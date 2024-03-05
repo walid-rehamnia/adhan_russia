@@ -39,12 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
               return Text('Error: ${snapshot.error}');
             } else {
               if (snapshot.hasData && snapshot.data.toString() != "") {
-                print('YESSSSS');
                 print(snapshot.data.toString());
                 return MyBottomNavigationBar();
               } else {
-                print('NOOOOOO');
-
                 return ChoiceScreen();
               }
             }
