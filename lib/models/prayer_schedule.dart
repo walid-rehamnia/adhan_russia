@@ -28,6 +28,7 @@ class PrayerSchedule {
     prayers = [];
     _preferencesController = Get.find<PreferencesController>();
     now = DateTime.now();
+    nextPrayerDateTime = now;
     isAdhan = false;
     isIqama = false;
   }
@@ -42,7 +43,7 @@ class PrayerSchedule {
 
   void notifyAdhan() {
     if (_preferencesController.isNotifyAdhan.value && !isAdhan) {
-      isAdhan = true;
+      isAdhan = false;
       isIqama = false;
 
       PrayerNotification.prayerNotification(

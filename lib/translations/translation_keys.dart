@@ -12,6 +12,7 @@ const prayerNotification = 'prayerNotification';
 const mode = 'mode';
 const standard = 'standard';
 const custom = 'custom';
+const currentLocation = "currentLocation";
 
 const adanNotificationTitle = 'adanNotificationTitle';
 const iqamaNotificationTitle = 'iqamaNotificationTitle';

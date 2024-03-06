@@ -66,7 +66,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
   @override
   void update() {
     // now = DateTime.now();
-    now = DateTime(now.year, now.month, now.day, 17, 40, 0);
+    now = DateTime(now.year, now.month, now.day, 4, 50, 0);
 
     //Answers the question about the current and next prayer, at the current time
     int i = 0;
@@ -82,7 +82,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
       switch (difference) {
         case 0:
           {
-            // print('case 0');
+            print('case 0');
             currentPrayer = prayers[i];
             currentPrayer.status = "now";
             nextPrayer = currentPrayer;
@@ -91,17 +91,18 @@ class CustomPrayerSchedule extends PrayerSchedule {
           break outerLoop;
         case <= IQAMA_TIME_OUT && > 0:
           {
-            // print('case <= IQAMA_TIME_OUT && > 0');
+            print('case <= IQAMA_TIME_OUT && > 0');
 
-            notifyIqama();
             currentPrayer = prayers[i];
-            currentPrayer.status = "passed";
-            nextPrayer = prayers[(i + 1) % prayers.length];
+            // currentPrayer.status = "passed";
+            // nextPrayer = prayers[(i + 1) % prayers.length];
+            nextPrayer = currentPrayer;
+            notifyIqama();
           }
           break outerLoop;
         case < 0:
           {
-            // print('case <0');
+            print('case <0');
 
             currentPrayer =
                 i > 0 ? prayers[i - 1] : prayers[prayers.length - 1];
@@ -111,19 +112,21 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
         case > IQAMA_TIME_OUT:
           {
-            // print('case > IQAMA_TIME_OUT');
+            print('case > IQAMA_TIME_OUT');
 
             prayers[i].status = "passed";
           }
       }
     }
-    hours = int.parse(nextPrayer.time.split(":")[0]);
-    minutes = int.parse(nextPrayer.time.split(":")[1]);
+    print("iiiiiiiiii$i");
 
     if (i == prayers.length) {
-      currentPrayer = prayers[prayers.length];
+      print('casssssssssssssssssssss');
+      currentPrayer = prayers[prayers.length - 1];
       nextPrayer = prayers[0];
 
+      hours = int.parse(nextPrayer.time.split(":")[0]);
+      minutes = int.parse(nextPrayer.time.split(":")[1]);
       DateTime tomorrowDateTime = now.add(NEXT_DAY_DURATION);
       nextPrayerDateTime = DateTime(tomorrowDateTime.year,
           tomorrowDateTime.month, tomorrowDateTime.day, hours, minutes, 0);

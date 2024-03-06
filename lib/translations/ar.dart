@@ -16,6 +16,7 @@ class Ar {
         translation.mode: 'طريقة حساب الأوقات',
         translation.standard: 'عادي',
         translation.custom: 'مخصص',
+        translation.currentLocation: "الموقع الحالي : @location",
         translation.adanNotificationTitle: 'الآن موعد أذان صلاة @prayer',
         translation.iqamaNotificationTitle: 'الآن موعد إقامة صلاة @prayer',
         translation.otherNotification: 'تنبيهات أخرى',

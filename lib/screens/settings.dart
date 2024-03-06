@@ -1,5 +1,4 @@
 import 'package:adan_russia/constatnts.dart';
-import 'package:adan_russia/main.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +25,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late String selectedRadio;
 
   // Checkbox options
-  bool enableFeature1 = false;
-  bool enableFeature2 = true;
 
   // Other options
   double sliderValue = 50.0;
@@ -57,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void saveSettings() async {
     print('async');
     // Implement your logic to save the settings here
-    EasyLoading.show(status: 'loading...'.tr);
+    EasyLoading.show(status: 'loading'.tr);
     await fakeAsyncOperation(3);
     EasyLoading.dismiss();
     EasyLoading.showSuccess('Great Success!');
@@ -122,27 +119,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       }).toList(),
                     ),
                     Text(
-                      'Adhan Time Mode',
+                      'mode'.tr,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     RadioListTile(
-                      title: Text('Standard Mode (Anywhere)'),
-                      value: 'standard'.tr,
+                      title: Text('standard'.tr),
+                      value: 'standard',
                       groupValue: selectedRadio,
                       onChanged: (value) async {
+                        EasyLoading.show(status: 'loading'.tr);
                         await setTimeMode("standard");
+                        EasyLoading.showSuccess('done'.tr);
                         setState(() {
                           selectedRadio = value!;
                         });
                       },
                     ),
                     RadioListTile(
-                      title: Text(
-                          'Custom Mode (More accurate / Restricted cities)'),
+                      title: Text('custom'.tr),
                       value: 'custom',
                       groupValue: selectedRadio,
-                      onChanged: (value) {
+                      onChanged: (value) async {
+                        EasyLoading.show(status: 'loading'.tr);
+                        await setTimeMode("custom");
+                        EasyLoading.showSuccess('done'.tr);
+                        EasyLoading.dismiss();
                         setState(() {
                           selectedRadio = value!;
                         });
@@ -155,21 +157,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     CheckboxListTile(
-                      title: Text('Enable Feature 1'),
-                      value: enableFeature1,
+                      title: Text('adanNotification'.tr),
+                      value: _preferencesController.isNotifyAdhan.value == true,
                       onChanged: (value) {
-                        setState(() {
-                          enableFeature1 = value!;
-                        });
+                        EasyLoading.show(status: 'loading'.tr);
+                        _preferencesController.updatePreference(
+                            "isNotifyAdhan", value!);
+                        EasyLoading.showSuccess('done'.tr);
+                        EasyLoading.dismiss();
                       },
                     ),
                     CheckboxListTile(
-                      title: Text('Enable Feature 2'),
-                      value: enableFeature2,
+                      title: Text('prayerNotification'.tr),
+                      value: _preferencesController.isNotifyIqama.value == true,
                       onChanged: (value) {
-                        setState(() {
-                          enableFeature2 = value!;
-                        });
+                        EasyLoading.show(status: 'loading'.tr);
+                        _preferencesController.updatePreference(
+                            "isNotifyIqama", value!);
+                        EasyLoading.showSuccess('done'.tr);
+                        EasyLoading.dismiss();
                       },
                     ),
                     SizedBox(height: 16),
@@ -179,10 +185,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                       child: isLoading
                           ? CircularProgressIndicator(color: MAIN_COLOR1)
-                          : Text('Location'),
+                          : Text('location'.tr),
                     ),
                     SizedBox(height: 8),
-                    Text('Current Location: $currentLocation'),
+                    Text('currentLocation'
+                        .trParams({"location": currentLocation})),
                     SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
