@@ -26,14 +26,12 @@ class _PrayerScreenState extends State<PrayerScreen> {
   late bool isTodayCalendar;
   late PrayerSchedule _prayerSchedule;
   late PreferencesController _preferencesController;
-  late final String timingMode;
 
   @override
   void initState() {
     super.initState();
     _preferencesController = Get.find<PreferencesController>();
-    timingMode = _preferencesController.timingMode.value;
-    if (timingMode == 'custom') {
+    if (_preferencesController.timingMode.value == 'custom') {
       _prayerSchedule = CustomPrayerSchedule();
     } else {
       _prayerSchedule = StandardPrayerSchedule();
@@ -80,7 +78,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 ),
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
@@ -88,7 +86,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.location_on,
                                 color: MAIN_COLOR1,
                                 size: 30.0,
@@ -98,26 +96,53 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
-                      Text(
-                        "${_prayerSchedule.getRemainingTime()}",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: MAIN_COLOR1,
-                          fontStyle: FontStyle.italic,
+                      Container(
+                        width: containerWidth / 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/back4.jpg'), // Replace with your image asset
+                            fit: BoxFit.cover,
+
+                            colorFilter: ColorFilter.mode(
+                              Colors.black.withOpacity(
+                                  0.5), // Adjust the opacity here (0.0 to 1.0)
+                              BlendMode.dstATop,
+                            ),
+                          ),
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                _prayerSchedule.getRemainingTime(),
+                                style: const TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                _prayerSchedule.nextPrayer.name.tr,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       // Left and right arrow buttons for navigation
 
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                      SizedBox(
-                        height: 20,
+                      const SizedBox(
+                        height: 40,
                       ),
                       // Display the DataTable
                       Container(
@@ -142,7 +167,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               SizedBox(
                                 height: 10,
                               ),
-                              this.timingMode == 'custom'
+                              _preferencesController.timingMode.value ==
+                                      'custom'
                                   ? customCalendarHeader()
                                   : defaultCalendarHeader(),
                               SizedBox(height: 10),
@@ -180,8 +206,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                       DataCell(Text(prayer.time)),
                                       DataCell(Checkbox(
                                           value: isTodayCalendar &&
-                                              (prayer.status == 'now' ||
-                                                  prayer.status == 'passed'),
+                                              (prayer.status == 'passed'),
                                           onChanged: (bool? value) {})),
                                     ],
                                   );
@@ -203,8 +228,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
       setState(() {
         prayerSchedule.update();
         isTodayCalendar = DateTime.now().day == prayerSchedule.calendarDate.day;
-        print(
-            "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
+        // print(
+        //     "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
       });
     } catch (e) {
       // Handle errors here

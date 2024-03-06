@@ -2,6 +2,7 @@ import 'package:adan_russia/components.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/utils/utils_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class ChoiceScreen extends StatefulWidget {
@@ -31,9 +32,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   "Calculate the prayer time based on different global used parameters (you will be able to customize them soon in app parameters)",
               onPressed: () async {
                 // Start loading
-                setState(() {
-                  isLoading = true;
-                });
+                EasyLoading.show(status: 'loading...'.tr);
+
                 try {
                   await setTimeMode('standard');
                   setState(() {

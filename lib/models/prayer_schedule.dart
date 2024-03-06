@@ -5,26 +5,31 @@ import 'package:adhan/adhan.dart';
 import 'package:get/get.dart';
 
 class PrayerSchedule {
+  // I've declared some variables hereto reduce for memory efficiency (rather than declaring them on update)
   late PrayerTimes prayerTimes;
 
   late final List<String> todayTimes;
   late List<MyPrayer> prayers;
   late MyPrayer currentPrayer;
   late MyPrayer nextPrayer;
-  late int durationHours;
-  late int durationMinutes;
+  late int hours;
+  late int minutes;
   late DateTime calendarDate;
-  late DateTime now; // I've declared it here to reduce for memory efficiency
-
-  late DateTime nextPrayerDateTime;
-
+  late DateTime now;
   late int prayerIndex;
+  late DateTime nextPrayerDateTime;
+  late bool isAdhan;
+  late bool isIqama;
+  int difference = 0;
   late DateTime prayerDateTime;
 
   late final PreferencesController _preferencesController;
   PrayerSchedule() {
     prayers = [];
     _preferencesController = Get.find<PreferencesController>();
+    now = DateTime.now();
+    isAdhan = false;
+    isIqama = false;
   }
 
   Future<void> init(DateTime date) async {}
@@ -36,17 +41,29 @@ class PrayerSchedule {
   }
 
   void notifyAdhan() {
-    if (_preferencesController.isNotifyAdhan.value &&
-        getRemainingTime() == '-0:00:00') {
+    if (_preferencesController.isNotifyAdhan.value && !isAdhan) {
+      isAdhan = true;
+      isIqama = false;
+
       PrayerNotification.prayerNotification(
-          title: "Hello the world", body: "Pray", payload: "p");
+          title: "adanNotificationTitle"
+              .trParams({"prayer": currentPrayer.name.tr}),
+          // "${currentPrayer.name.tr} = ${currentPrayer.time} ${'about'.tr}",
+          body: "",
+          payload: "adhan");
     }
   }
 
   void notifyIqama() {
-    if (_preferencesController.isNotifyIqama.value) {
+    if (_preferencesController.isNotifyIqama.value && !isIqama) {
+      isIqama = true;
+      isAdhan = false;
+
       PrayerNotification.prayerNotification(
-          title: "Hello the world", body: "Pray", payload: "p");
+          title: "iqamaNotificationTitle"
+              .trParams({"prayer": currentPrayer.name.tr}),
+          body: "",
+          payload: "iqama");
     }
   }
 }

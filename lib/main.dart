@@ -1,3 +1,4 @@
+import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/splash_screen.dart';
@@ -5,6 +6,7 @@ import 'package:adan_russia/translations/my_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -18,9 +20,12 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Get.put(PreferencesController());
+  PreferencesController myController = PreferencesController();
+  await myController.loadPreferences();
 
-  await setLocale();
+  Get.put(myController);
+
+  setLocale();
 
   runApp(const MyApp());
 }
@@ -38,13 +43,14 @@ class MyApp extends StatelessWidget {
       title: 'Adan Russia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue, // Set the primary color
-        primarySwatch: Colors.green,
+        primaryColor: MAIN_COLOR, // Set the primary color
+        // primarySwatch: Colors.green,
       ),
       translations: MyTranslations(),
       locale: Get.locale,
       fallbackLocale: const Locale('en', 'US'),
       home: SplashScreen(),
+      builder: EasyLoading.init(),
     );
   }
 }

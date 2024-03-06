@@ -1,7 +1,6 @@
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
-import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/utils/time_util.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adhan/adhan.dart';

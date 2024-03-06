@@ -1,6 +1,5 @@
 import 'package:adan_russia/preferences.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui' as ui;
 
 import 'ar.dart';
@@ -30,15 +29,26 @@ List<Locale> getSupportedLocales() {
   }).toList();
 }
 
-Future<void> setLocale() async {
-  print('setLocale');
-  var prefs = await SharedPreferences.getInstance();
-
+void setLocale() {
+  print('####################setlocale');
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
-  if (preferencesController.locale.value != "") {
-    Get.updateLocale(Locale(preferencesController.locale.value!));
-  } else {
-    Get.updateLocale(Locale('en', 'US'));
+  String language = preferencesController.defaultLanguage.value;
+  print('language : $language');
+  switch (language) {
+    case "":
+      {
+        print('nnnnnnnn');
+      }
+    case "english":
+      Get.updateLocale(const Locale('en', 'US'));
+      break;
+    case "arabic":
+      Get.updateLocale(const Locale('ar', 'AR'));
+      break;
+    case "russian":
+      Get.updateLocale(const Locale('ru', 'RU'));
+      break;
+    default:
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -14,8 +15,10 @@ int intFromTime(DateTime date) {
 double progress(String? currentPrayerTime, String nextPrayerTime) {
   if (currentPrayerTime != null) {
     if (nextPrayerTime != "s" && currentPrayerTime != "s") {
-      if (intFromTime(DateFormat("HH:mm").parse(nextPrayerTime)) >= intFromTime(DateTime.now())) {
-        return (intFromTime(DateTime.now()) - intFromTime(DateFormat("HH:mm").parse(currentPrayerTime))) /
+      if (intFromTime(DateFormat("HH:mm").parse(nextPrayerTime)) >=
+          intFromTime(DateTime.now())) {
+        return (intFromTime(DateTime.now()) -
+                intFromTime(DateFormat("HH:mm").parse(currentPrayerTime))) /
             (intFromTime(DateFormat("HH:mm").parse(nextPrayerTime)) -
                 intFromTime(DateFormat("HH:mm").parse(currentPrayerTime)));
       }
@@ -44,4 +47,13 @@ extension DateOnlyCompare on DateTime {
   bool isSameDate(DateTime other) {
     return year == other.year && month == other.month && day == other.day;
   }
+}
+
+int getMinutesFromTime(DateTime date) {
+  return date.hour * 60 + date.minute;
+}
+
+int getDifference(
+    int nowHour, int nowMinute, int prayerHour, int prayerMinute) {
+  return (nowHour * 60 + nowMinute) - (prayerHour * 60 + prayerMinute);
 }

@@ -8,7 +8,7 @@ class PreferencesController extends GetxController {
   RxString calendarYear = ''.obs;
   RxString calendarMonthlyData = ''.obs;
 
-  RxString locale = ''.obs;
+  RxString defaultLanguage = ''.obs;
   RxString userLocation = ''.obs;
 
   RxDouble positionLatitude = 0.0.obs;
@@ -18,10 +18,10 @@ class PreferencesController extends GetxController {
   RxBool isNotifyIqama = true.obs;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onInit() async {
     // Load preferences when the controller is initialized
-    loadPreferences();
+    // loadPreferences();
+    super.onInit();
   }
 
   Future<void> loadPreferences() async {
@@ -32,16 +32,18 @@ class PreferencesController extends GetxController {
 
     calendarMonthlyData.value = prefs.getString('calendarMonthlyData') ?? '';
 
-    locale.value = prefs.getString('locale') ?? '';
+    defaultLanguage.value = prefs.getString('defaultLanguage') ?? '';
     userLocation.value = prefs.getString('userLocation') ?? '';
     positionLatitude.value = prefs.getDouble('positionLatitude') ?? 0.0;
     positionLongitude.value = prefs.getDouble('positionLongitude') ?? 0.0;
 
     isNotifyAdhan.value = prefs.getBool('isNotifyAdhan') ?? true;
     isNotifyIqama.value = prefs.getBool('isNotifyIqama') ?? true;
+    print('loading**********************************$defaultLanguage');
   }
 
   Future<void> updatePreference(String prefName, var value) async {
+    print('updatePreference$prefName=$value');
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     switch (value.runtimeType) {
@@ -69,8 +71,8 @@ class PreferencesController extends GetxController {
       case "calendarMonthlyData":
         calendarMonthlyData.value = value;
         break;
-      case "locale":
-        locale.value = value;
+      case "defaultLanguage":
+        defaultLanguage.value = value;
         break;
       case "positionLatitude":
         positionLatitude.value = value;
