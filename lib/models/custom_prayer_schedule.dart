@@ -118,7 +118,6 @@ class CustomPrayerSchedule extends PrayerSchedule {
           }
       }
     }
-    print("iiiiiiiiii$i");
 
     if (i == prayers.length) {
       print('casssssssssssssssssssss');

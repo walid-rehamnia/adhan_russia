@@ -54,23 +54,88 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
     // print(nextPrayer.time + ':00');
 
-    for (int i = 0; i < prayers.length; i++) {
-      int intPrayerTime =
-          intFromTime(DateFormat("HH:mm").parse(prayers[i].time));
+    // for (int i = 0; i < prayers.length; i++) {
+    //   int intPrayerTime =
+    //       intFromTime(DateFormat("HH:mm").parse(prayers[i].time));
 
-      if (intFromTime(now.subtract(IQAMA_DURATION)) <= intPrayerTime) {
-        prayers[i].status = "now";
-        if (intFromTime(now.subtract(IQAMA_DURATION)) == intPrayerTime) {
-          notifyIqama();
-        }
-        break;
-      }
-      if (intFromTime(now) > intPrayerTime) {
-        prayers[i].status = "passed";
+    //   if (intFromTime(now.subtract(IQAMA_DURATION)) <= intPrayerTime) {
+    //     prayers[i].status = "now";
+    //     if (intFromTime(now.subtract(IQAMA_DURATION)) == intPrayerTime) {
+    //       notifyIqama();
+    //     }
+    //     break;
+    //   }
+    //   if (intFromTime(now) > intPrayerTime) {
+    //     prayers[i].status = "passed";
+    //   }
+    // }
+    int i = 0;
+    outerLoop:
+    for (i = 0; i < prayers.length; i++) {
+      print('foor $i');
+      hours = int.parse(prayers[i].time.split(":")[0]);
+      minutes = int.parse(prayers[i].time.split(":")[1]);
+
+      difference = getDifference(now.hour, now.minute, hours, minutes);
+      print("${prayers[i].name}: $difference");
+      switch (difference) {
+        case 0:
+          {
+            print('case 0');
+            // currentPrayer = prayers[i];
+            // currentPrayer.status = "now";
+            // nextPrayer = currentPrayer;
+            notifyAdhan();
+          }
+          break outerLoop;
+        case <= IQAMA_TIME_OUT && > 0:
+          {
+            print('case <= IQAMA_TIME_OUT && > 0');
+
+            // currentPrayer = prayers[i];
+            // currentPrayer.status = "passed";
+            // nextPrayer = prayers[(i + 1) % prayers.length];
+            // nextPrayer = currentPrayer;
+            notifyIqama();
+          }
+          break outerLoop;
+        case < 0:
+          {
+            print('case <0');
+
+            // currentPrayer =
+            //     i > 0 ? prayers[i - 1] : prayers[prayers.length - 1];
+            // nextPrayer = prayers[i];
+          }
+          break outerLoop;
+
+        case > IQAMA_TIME_OUT:
+          {
+            print('case > IQAMA_TIME_OUT');
+
+            prayers[i].status = "passed";
+          }
       }
     }
 
+    if (i == prayers.length) {
+      print('casssssssssssssssssssss');
+      currentPrayer = prayers[prayers.length - 1];
+      nextPrayer = prayers[0];
+
+      hours = int.parse(nextPrayer.time.split(":")[0]);
+      minutes = int.parse(nextPrayer.time.split(":")[1]);
+      DateTime tomorrowDateTime = now.add(NEXT_DAY_DURATION);
+      nextPrayerDateTime = DateTime(tomorrowDateTime.year,
+          tomorrowDateTime.month, tomorrowDateTime.day, hours, minutes, 0);
+    } else {
+      nextPrayerDateTime =
+          DateTime(now.year, now.month, now.day, hours, minutes, 0);
+    }
+
     //always update the current status
-    notifyAdhan();
+    // notifyAdhan();
+    print(
+        'current prayer:${currentPrayer.name}, nextprayer:${nextPrayer.name}');
   }
 }
