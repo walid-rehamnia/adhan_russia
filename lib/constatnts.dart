@@ -1,4 +1,3 @@
-import 'package:adan_russia/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,7 +36,7 @@ const List<String> GREGORIAN_MONTHS = [
   "December",
 ];
 
-MaterialColor? MAIN_COLOR1 = Colors.blue;
+const Duration IQAMA_DURATION = Duration(minutes: -15);
+const Duration NEXT_DAY_DURATION = Duration(days: 1);
+const MaterialColor? MAIN_COLOR1 = Colors.blue;
 Color MAIN_COLOR2 = Colors.blue;
-
-String APP_NAME = "Adhan Russia";

@@ -14,7 +14,7 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
   @override
   Future<void> init(DateTime date) async {
-    print('My Prayer Times');
+    print('Standard Prayer Times');
     calendarDate = date;
     final Coordinates myCoordinates = await getCoordinates();
     final params = CalculationMethod.karachi.getParameters();
@@ -32,6 +32,11 @@ class StandardPrayerSchedule extends PrayerSchedule {
       DateFormat.Hm().format(prayerTimes.maghrib),
       DateFormat.Hm().format(prayerTimes.isha),
     ];
+
+    for (String time in todayTimes) {
+      print(time);
+    }
+
     prayers.clear();
     for (int i = 0; i < todayTimes.length; i++) {
       prayers.add(MyPrayer(todayTimes[i], PRAYER_NAMES[i], i));
@@ -40,12 +45,7 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
   @override
   void update() {
-    print('################');
     now = DateTime.now();
-    print(prayerTimes.nextPrayer());
-    print((prayerTimes.nextPrayer().index - 1).abs());
-    print(prayerTimes.currentPrayer().index - 1);
-
     prayerIndex = prayerTimes.currentPrayer().index;
     //return Ischa (cyclic table in my logic =>Subh comes after ischa in index), If index is 0 return Isha
     currentPrayer = prayerIndex != 0 ? prayers[prayerIndex - 1] : prayers[5];
@@ -55,22 +55,23 @@ class StandardPrayerSchedule extends PrayerSchedule {
 
     // print(nextPrayer.time + ':00');
 
-    int i = 0;
-    for (i = 0; i < prayers.length; i++) {
-      if (intFromTime(now) ==
-          intFromTime(DateFormat("HH:mm").parse(prayers[i].time))) {
+    for (int i = 0; i < prayers.length; i++) {
+      int intPrayerTime =
+          intFromTime(DateFormat("HH:mm").parse(prayers[i].time));
+
+      if (intFromTime(now.subtract(IQAMA_DURATION)) <= intPrayerTime) {
         prayers[i].status = "now";
-      } else if (intFromTime(now) >
-          intFromTime(DateFormat("HH:mm").parse(prayers[i].time))) {
+        if (intFromTime(now.subtract(IQAMA_DURATION)) == intPrayerTime) {
+          notifyIqama();
+        }
+        break;
+      }
+      if (intFromTime(now) > intPrayerTime) {
         prayers[i].status = "passed";
       }
     }
 
     //always update the current status
-    currentPrayer.status = "now";
-    if (getRemainingTime() == '-0:00:00') {
-      PrayerNotification.prayerNotification(
-          title: "Hello the world", body: "Pray", payload: "p");
-    }
+    notifyAdhan();
   }
 }

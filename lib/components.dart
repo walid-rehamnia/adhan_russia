@@ -1,7 +1,7 @@
 import 'package:adan_russia/controllers.dart';
 import 'package:adan_russia/screens/about_page.dart';
 
-import 'package:adan_russia/screens/calendar_screen2.dart';
+import 'package:adan_russia/screens/prayer_screen.dart';
 
 import 'package:adan_russia/screens/settings.dart';
 import 'package:flutter/material.dart';

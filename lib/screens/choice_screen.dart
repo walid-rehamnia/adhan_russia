@@ -1,9 +1,6 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/preferences.dart';
-import 'package:adan_russia/utils/utils.dart';
-import 'package:adan_russia/utils/utils_location.dart';
-import 'package:adan_russia/utils/utils_data.dart';
-import 'package:adhan/adhan.dart';
+import 'package:adan_russia/utils/utils_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,11 +62,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   isLoading = true;
                 });
                 try {
-                  await setTimeMode('standard');
+                  await setTimeMode('custom');
 
-                  await checkFirstInstallation();
-                  preferencesController.updatePreference(
-                      "timingMode", "custom");
                   setState(() {
                     isLoading = false;
                   });

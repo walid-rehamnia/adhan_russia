@@ -1,5 +1,8 @@
 import 'package:adan_russia/models/prayer.dart';
+import 'package:adan_russia/prayer_notification.dart';
+import 'package:adan_russia/preferences.dart';
 import 'package:adhan/adhan.dart';
+import 'package:get/get.dart';
 
 class PrayerSchedule {
   late PrayerTimes prayerTimes;
@@ -12,11 +15,16 @@ class PrayerSchedule {
   late int durationMinutes;
   late DateTime calendarDate;
   late DateTime now; // I've declared it here to reduce for memory efficiency
+
+  late DateTime nextPrayerDateTime;
+
   late int prayerIndex;
   late DateTime prayerDateTime;
 
+  late final PreferencesController _preferencesController;
   PrayerSchedule() {
     prayers = [];
+    _preferencesController = Get.find<PreferencesController>();
   }
 
   Future<void> init(DateTime date) async {}
@@ -24,20 +32,21 @@ class PrayerSchedule {
   void update() {}
 
   String getRemainingTime() {
-    durationHours = int.parse(nextPrayer.time.split(":")[0]);
-    durationMinutes = int.parse(nextPrayer.time.split(":")[1]);
+    return now.difference(nextPrayerDateTime).toString().split('.')[0];
+  }
 
-    if (nextPrayer.index == 0) {
-      DateTime tomorrowDateTime = now.add(Duration(days: 1));
-      prayerDateTime = DateTime(tomorrowDateTime.year, tomorrowDateTime.month,
-          tomorrowDateTime.day, durationHours, durationMinutes, 0);
-    } else {
-      prayerDateTime = DateTime(
-          now.year, now.month, now.day, durationHours, durationMinutes, 0);
+  void notifyAdhan() {
+    if (_preferencesController.isNotifyAdhan.value &&
+        getRemainingTime() == '-0:00:00') {
+      PrayerNotification.prayerNotification(
+          title: "Hello the world", body: "Pray", payload: "p");
     }
+  }
 
-    //if Subh
-
-    return now.difference(prayerDateTime).toString().split('.')[0];
+  void notifyIqama() {
+    if (_preferencesController.isNotifyIqama.value) {
+      PrayerNotification.prayerNotification(
+          title: "Hello the world", body: "Pray", payload: "p");
+    }
   }
 }
