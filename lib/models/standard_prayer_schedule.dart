@@ -3,6 +3,7 @@ import 'package:adan_russia/models/prayer.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/utils/time_util.dart';
 import 'package:adan_russia/utils/utils_location.dart';
+import 'package:adan_russia/utils/utils_settings.dart';
 import 'package:adhan/adhan.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +16,7 @@ class StandardPrayerSchedule extends PrayerSchedule {
   Future<void> init(DateTime date) async {
     calendarDate = date;
     final Coordinates myCoordinates = await getCoordinates();
-    final params = CalculationMethod.north_america.getParameters();
+    final params = getCalculationParameters();
     // final params = CalculationMethod.tehran.getParameters();
     // final params = CalculationMethod.umm_al_qura.getParameters();
 

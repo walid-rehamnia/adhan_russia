@@ -145,7 +145,6 @@ void listLocalFiles() async {
   for (var file in files) {
     print("File Name: ${file.uri.pathSegments.last}");
   }
-  print('*******************All existing files***************');
 }
 
 Future<void> checkFirstInstallation() async {

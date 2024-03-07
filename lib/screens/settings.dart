@@ -1,5 +1,6 @@
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/preferences.dart';
+import 'package:adan_russia/screens/card_choices_screen.dart';
 import 'package:adan_russia/translations/my_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,10 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   void initState() {
-    print('********');
     _preferencesController = Get.find<PreferencesController>();
-    print(
-        '_preferencesController.defaultLanguage.value.tr ${_preferencesController.defaultLanguage.value.tr}');
+
     selectedRadio = _preferencesController.timingMode.value;
     // currentLanguage = "english".tr;
     currentLocation = _preferencesController.userLocation.value;
@@ -58,16 +57,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Text(
                 'language'.tr,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                style: TITLE_STYLE,
               ),
               DropdownButton<String>(
                 dropdownColor: Colors.grey,
                 value: _preferencesController.defaultLanguage.value.tr,
                 onChanged: (String? newValue) {
-                  print(newValue);
                   updateDefaultLanguage(newValue!);
                   EasyLoading.showSuccess('done'.tr);
                 },
@@ -85,23 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Text(
                 'mode'.tr,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              RadioListTile(
-                title: Text('standard'.tr),
-                value: 'standard',
-                groupValue: selectedRadio,
-                tileColor: selectedRadio == "standard" ? MAIN_COLOR : null,
-                hoverColor: Colors.black,
-                activeColor: Colors.black,
-                onChanged: (value) async {
-                  EasyLoading.show(status: 'loading'.tr);
-                  await setTimeMode("standard");
-                  EasyLoading.showSuccess('done'.tr);
-                  setState(() {
-                    selectedRadio = value!;
-                  });
-                },
+                style: TITLE_STYLE,
               ),
               RadioListTile(
                 title: Text('custom'.tr),
@@ -120,6 +99,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                 },
               ),
+              RadioListTile(
+                title: Text('standard'.tr),
+                value: 'standard',
+                groupValue: selectedRadio,
+                tileColor: selectedRadio == "standard" ? MAIN_COLOR : null,
+                hoverColor: Colors.black,
+                activeColor: Colors.black,
+                onChanged: (value) async {
+                  EasyLoading.show(status: 'loading'.tr);
+                  await setTimeMode("standard");
+                  EasyLoading.showSuccess('done'.tr);
+                  setState(() {
+                    selectedRadio = value!;
+                  });
+                },
+              ),
+              if (selectedRadio == "standard")
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: MAIN_COLOR,
+                    ),
+                    child: Text(
+                      "methodButton".tr,
+                      style: const TextStyle(
+                          fontFamily: 'Amiri',
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return const CardChoices();
+                        },
+                      );
+                    },
+                  ),
+                ),
               const SizedBox(height: 10),
               const Divider(
                 color: Colors.black,
@@ -128,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 10),
               Text(
                 'notificationOptions'.tr,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TITLE_STYLE,
               ),
               CheckboxListTile(
                 title: Text('adanNotification'.tr),
@@ -166,7 +185,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 10),
               Text(
                 'currentLocation'.tr,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TITLE_STYLE,
               ),
               Column(
                 children: [

@@ -21,32 +21,36 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          future: _defaultMode,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // Show a loading indicator while downloading
-              return const MyProgressLoader();
-            } else if (snapshot.hasError) {
-              // Show an error message if file download fails
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(snapshot.error.toString()),
-                  duration: Duration(seconds: 3),
-                ),
-              );
-              return Text('Error: ${snapshot.error}');
-            } else {
-              if (snapshot.hasData && snapshot.data.toString() != "") {
-                print(snapshot.data.toString());
-                return MyBottomNavigationBar();
+    return DefaultTextStyle(
+      style: const TextStyle(
+          fontFamily: 'Amiri', fontWeight: FontWeight.w700, fontSize: 17),
+      child: Scaffold(
+        body: Center(
+          child: FutureBuilder(
+            future: _defaultMode,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Show a loading indicator while downloading
+                return const MyProgressLoader();
+              } else if (snapshot.hasError) {
+                // Show an error message if file download fails
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(snapshot.error.toString()),
+                    duration: Duration(seconds: 3),
+                  ),
+                );
+                return Text('Error: ${snapshot.error}');
               } else {
-                return ChoiceScreen();
+                if (snapshot.hasData && snapshot.data.toString() != "") {
+                  print(snapshot.data.toString());
+                  return MyBottomNavigationBar();
+                } else {
+                  return ChoiceScreen();
+                }
               }
-            }
-          },
+            },
+          ),
         ),
       ),
     );

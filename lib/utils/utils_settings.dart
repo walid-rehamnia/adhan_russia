@@ -61,3 +61,43 @@ Future<String> updateUserLocation() async {
 
   return address;
 }
+
+void setCalculationMethod(String calculationMethod) {
+  print('updating$calculationMethod');
+  PreferencesController preferencesController =
+      Get.find<PreferencesController>();
+  preferencesController.updatePreference(
+      "calculationMethod", calculationMethod);
+}
+
+CalculationParameters getCalculationParameters() {
+  String calculationMethod =
+      Get.find<PreferencesController>().calculationMethod.value;
+
+  switch (calculationMethod) {
+    case "dubai":
+      return CalculationMethod.dubai.getParameters();
+    case "egyptian":
+      return CalculationMethod.egyptian.getParameters();
+    case "karachi":
+      return CalculationMethod.karachi.getParameters();
+    case "kuwait":
+      return CalculationMethod.kuwait.getParameters();
+    case "moon_sighting_committee":
+      return CalculationMethod.moon_sighting_committee.getParameters();
+    case "muslim_world_league":
+      return CalculationMethod.muslim_world_league.getParameters();
+    case "qatar":
+      return CalculationMethod.qatar.getParameters();
+    case "tehran":
+      return CalculationMethod.tehran.getParameters();
+    case "turkey":
+      return CalculationMethod.turkey.getParameters();
+    case "umm_al_qura":
+      return CalculationMethod.umm_al_qura.getParameters();
+    case "other":
+      return CalculationMethod.other.getParameters();
+    default: //include northamerica choice and any unexpected other choice
+      return CalculationMethod.north_america.getParameters();
+  }
+}

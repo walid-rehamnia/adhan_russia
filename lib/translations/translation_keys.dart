@@ -13,6 +13,22 @@ const mode = 'mode';
 const language = 'language';
 const standard = 'standard';
 const custom = 'custom';
+
+
+const methodButton = "methodButton";
+    const dubai = "dubai";
+    const egyptian ='egyptian';
+    const karachi ='karachi';
+    const kuwait = 'kuwait';
+    const moon_sighting_committee = 'moon_sighting_committee';
+    const muslim_world_league= 'muslim_world_league';
+    const north_america = 'north_america';
+    const qatar = 'qatar';
+    const tehran ='tehran';
+    const turkey='turkey';
+    const umm_al_qura='umm_al_qura';
+    const other='other';
+
 const currentLocation = "currentLocation";
 
 const notificationOptions = "notificationOptions";

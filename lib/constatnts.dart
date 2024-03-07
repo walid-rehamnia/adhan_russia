@@ -56,3 +56,10 @@ BoxDecoration BACKGROUND_SCREEN = BoxDecoration(
     ),
   ),
 );
+
+const TextStyle TITLE_STYLE = TextStyle(
+  fontSize: 19,
+  fontWeight: FontWeight.w900,
+  color: Colors.black,
+  fontFamily: 'Amiri',
+);

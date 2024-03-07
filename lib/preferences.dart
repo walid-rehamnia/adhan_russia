@@ -1,3 +1,4 @@
+import 'package:adhan/adhan.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,6 +11,7 @@ class PreferencesController extends GetxController {
 
   RxString defaultLanguage = ''.obs;
   RxString userLocation = ''.obs;
+  RxString calculationMethod = ''.obs;
 
   RxDouble positionLatitude = 0.0.obs;
   RxDouble positionLongitude = 0.0.obs;
@@ -31,9 +33,11 @@ class PreferencesController extends GetxController {
     calendarYear.value = prefs.getString('calendarYear') ?? '';
 
     calendarMonthlyData.value = prefs.getString('calendarMonthlyData') ?? '';
+    calculationMethod.value = prefs.getString('CalculationMethod') ?? '';
 
     defaultLanguage.value = prefs.getString('defaultLanguage') ?? '';
     userLocation.value = prefs.getString('userLocation') ?? '';
+
     positionLatitude.value = prefs.getDouble('positionLatitude') ?? 0.0;
     positionLongitude.value = prefs.getDouble('positionLongitude') ?? 0.0;
 
@@ -87,6 +91,9 @@ class PreferencesController extends GetxController {
         break;
       case "isNotifyIqama":
         isNotifyIqama.value = value;
+        break;
+      case "calculationMethod":
+        calculationMethod.value = value;
         break;
     }
   }

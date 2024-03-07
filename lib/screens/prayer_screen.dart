@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jhijri/_src/_jHijri.dart';
+import 'dart:ui' as ui;
 
 class PrayerScreen extends StatefulWidget {
   const PrayerScreen({super.key});
@@ -88,11 +89,17 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             onPressed: () {},
                             icon: const Icon(
                               Icons.location_on,
-                              color: MAIN_COLOR1,
+                              color: Colors.black,
                               size: 30.0,
                             ),
                           ),
-                          Text(_preferencesController.userLocation.value),
+                          Text(
+                            _preferencesController.userLocation.value,
+                            style: const TextStyle(
+                                fontFamily: 'Amiri',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 15),
+                          ),
                         ],
                       ),
                     ),
@@ -120,6 +127,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                           children: [
                             Text(
                               _prayerSchedule.getRemainingTime(),
+                              textDirection: ui.TextDirection.ltr,
                               style: const TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
@@ -157,7 +165,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
 
                             colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(
-                                  0.5), // Adjust the opacity here (0.0 to 1.0)
+                                  0.6), // Adjust the opacity here (0.0 to 1.0)
                               BlendMode.dstATop,
                             ),
                           ),
@@ -172,25 +180,50 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                 : defaultCalendarHeader(),
                             SizedBox(height: 10),
                             DataTable(
+                              dataRowColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                                  // Set color based on the button state
+                                  return MAIN_COLOR; // Default color
+                                },
+                              ),
                               columns: [
                                 DataColumn(
-                                  label: Text('schedulePrayer'.tr),
-                                  numeric: true,
-                                ),
-                                DataColumn(
-                                  label: Container(
-                                    child: Text('scheduleTime'.tr),
+                                  label: Text(
+                                    'schedulePrayer'.tr,
+                                    style: const TextStyle(
+                                        fontFamily: 'Amiri',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 17),
                                   ),
                                   numeric: true,
                                 ),
                                 DataColumn(
-                                  label: Text('schedulePassed'.tr),
+                                  label: Container(
+                                    child: Text(
+                                      'scheduleTime'.tr,
+                                      style: const TextStyle(
+                                          fontFamily: 'Amiri',
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 17),
+                                    ),
+                                  ),
+                                  numeric: true,
+                                ),
+                                DataColumn(
+                                  label: Text(
+                                    'schedulePassed'.tr,
+                                    style: const TextStyle(
+                                        fontFamily: 'Amiri',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 17),
+                                  ),
                                   numeric: true,
                                 ),
                               ],
                               dividerThickness: 1.5,
-                              dataTextStyle: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
+                              dataTextStyle: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                               rows: prayers.asMap().entries.map((entry) {
                                 final index = entry.key;
                                 final prayer = entry.value;
@@ -199,11 +232,37 @@ class _PrayerScreenState extends State<PrayerScreen> {
                                     (prayer.name ==
                                         _prayerSchedule.nextPrayer.name);
                                 return DataRow(
+                                  color:
+                                      MaterialStateProperty.resolveWith<Color?>(
+                                    (Set<MaterialState> states) {
+                                      // Check if the row is selected
+                                      if (_prayerSchedule.nextPrayer.index ==
+                                              index &&
+                                          _prayerSchedule.nextPrayer.status !=
+                                              "passed") {
+                                        return MAIN_COLOR;
+                                      }
+                                      return null; // Default color for other rows
+                                    },
+                                  ),
                                   selected: isSelected,
                                   cells: [
-                                    DataCell(Text(prayer.name.tr)),
-                                    DataCell(Text(prayer.time)),
+                                    DataCell(Center(
+                                      child: Text(
+                                        prayer.name.tr,
+                                        style: const TextStyle(
+                                            fontFamily: 'Amiri',
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 17),
+                                      ),
+                                    )),
+                                    DataCell(Text(
+                                      prayer.time,
+                                    )),
                                     DataCell(Checkbox(
+                                        hoverColor: Colors.black,
+                                        checkColor: Colors.black,
+                                        activeColor: MAIN_COLOR,
                                         value: isTodayCalendar &&
                                             (prayer.status == 'passed'),
                                         onChanged: (bool? value) {})),
@@ -307,7 +366,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_left),
+              icon: const Icon(Icons.arrow_left),
               onPressed: () {
                 _navigateToDay(-1);
               },
@@ -317,7 +376,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 for (String text in _getFormattedDate(currentIndex))
                   Text(
                     text,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TITLE_STYLE,
+                    textDirection: ui.TextDirection.ltr,
                   ),
               ],
             ),
