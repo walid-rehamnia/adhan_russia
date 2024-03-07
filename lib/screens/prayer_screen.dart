@@ -175,17 +175,17 @@ class _PrayerScreenState extends State<PrayerScreen> {
                               DataTable(
                                 columns: [
                                   DataColumn(
-                                    label: Text('Prayer'),
+                                    label: Text('schedulePrayer'.tr),
                                     numeric: true,
                                   ),
                                   DataColumn(
                                     label: Container(
-                                      child: Text('Adhan time'),
+                                      child: Text('scheduleTime'.tr),
                                     ),
                                     numeric: true,
                                   ),
                                   DataColumn(
-                                    label: Text('Is passed'),
+                                    label: Text('schedulePassed'.tr),
                                     numeric: true,
                                   ),
                                 ],

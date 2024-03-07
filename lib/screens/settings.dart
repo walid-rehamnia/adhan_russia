@@ -92,115 +92,120 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Settings'),
-          centerTitle: true,
-        ),
-        body: Obx(() => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DropdownButton<String>(
-                      value: _preferencesController.defaultLanguage.value.tr,
-                      onChanged: (String? newValue) {
-                        print(newValue);
-                        setDefaultLanguage(newValue!);
-                        EasyLoading.showSuccess('done'.tr);
-                      },
-                      items: <String>['arabic'.tr, 'english'.tr, 'russian'.tr]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                    Text(
-                      'mode'.tr,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    RadioListTile(
-                      title: Text('standard'.tr),
-                      value: 'standard',
-                      groupValue: selectedRadio,
-                      onChanged: (value) async {
-                        EasyLoading.show(status: 'loading'.tr);
-                        await setTimeMode("standard");
-                        EasyLoading.showSuccess('done'.tr);
-                        setState(() {
-                          selectedRadio = value!;
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      title: Text('custom'.tr),
-                      value: 'custom',
-                      groupValue: selectedRadio,
-                      onChanged: (value) async {
-                        EasyLoading.show(status: 'loading'.tr);
-                        await setTimeMode("custom");
-                        EasyLoading.showSuccess('done'.tr);
-                        EasyLoading.dismiss();
-                        setState(() {
-                          selectedRadio = value!;
-                        });
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Checkbox Options:',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    CheckboxListTile(
-                      title: Text('adanNotification'.tr),
-                      value: _preferencesController.isNotifyAdhan.value == true,
-                      onChanged: (value) {
-                        EasyLoading.show(status: 'loading'.tr);
-                        _preferencesController.updatePreference(
-                            "isNotifyAdhan", value!);
-                        EasyLoading.showSuccess('done'.tr);
-                        EasyLoading.dismiss();
-                      },
-                    ),
-                    CheckboxListTile(
-                      title: Text('prayerNotification'.tr),
-                      value: _preferencesController.isNotifyIqama.value == true,
-                      onChanged: (value) {
-                        EasyLoading.show(status: 'loading'.tr);
-                        _preferencesController.updatePreference(
-                            "isNotifyIqama", value!);
-                        EasyLoading.showSuccess('done'.tr);
-                        EasyLoading.dismiss();
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await getCoordinates();
-                      },
-                      child: isLoading
-                          ? CircularProgressIndicator(color: MAIN_COLOR1)
-                          : Text('location'.tr),
-                    ),
-                    SizedBox(height: 8),
-                    Text('currentLocation'
-                        .trParams({"location": currentLocation})),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        saveSettings();
-                      },
-                      child: Text('Save'),
-                    ),
-                  ],
+        body: Obx(
+      () => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'language'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            DropdownButton<String>(
+              value: _preferencesController.defaultLanguage.value.tr,
+              onChanged: (String? newValue) {
+                print(newValue);
+                setDefaultLanguage(newValue!);
+                EasyLoading.showSuccess('done'.tr);
+              },
+              items: <String>['arabic'.tr, 'english'.tr, 'russian'.tr]
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+            Text(
+              'mode'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            RadioListTile(
+              title: Text('standard'.tr),
+              value: 'standard',
+              groupValue: selectedRadio,
+              onChanged: (value) async {
+                EasyLoading.show(status: 'loading'.tr);
+                await setTimeMode("standard");
+                EasyLoading.showSuccess('done'.tr);
+                setState(() {
+                  selectedRadio = value!;
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text('custom'.tr),
+              value: 'custom',
+              groupValue: selectedRadio,
+              onChanged: (value) async {
+                EasyLoading.show(status: 'loading'.tr);
+                await setTimeMode("custom");
+                EasyLoading.showSuccess('done'.tr);
+                EasyLoading.dismiss();
+                setState(() {
+                  selectedRadio = value!;
+                });
+              },
+            ),
+            SizedBox(height: 16),
+            Text(
+              'notificationOptions'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            CheckboxListTile(
+              title: Text('adanNotification'.tr),
+              value: _preferencesController.isNotifyAdhan.value == true,
+              onChanged: (value) {
+                EasyLoading.show(status: 'loading'.tr);
+                _preferencesController.updatePreference(
+                    "isNotifyAdhan", value!);
+                EasyLoading.showSuccess('done'.tr);
+                EasyLoading.dismiss();
+              },
+            ),
+            CheckboxListTile(
+              title: Text('prayerNotification'.tr),
+              value: _preferencesController.isNotifyIqama.value == true,
+              onChanged: (value) {
+                EasyLoading.show(status: 'loading'.tr);
+                _preferencesController.updatePreference(
+                    "isNotifyIqama", value!);
+                EasyLoading.showSuccess('done'.tr);
+                EasyLoading.dismiss();
+              },
+            ),
+            SizedBox(height: 16),
+            Text(
+              'currentLocation'.tr,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Column(
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    EasyLoading.show(status: 'loading'.tr);
+                    await updateUserLocation();
+                    EasyLoading.showSuccess('done'.tr);
+                    EasyLoading.dismiss();
+                  },
+                  icon: const Icon(
+                    Icons.edit_location_alt_sharp,
+                    color: MAIN_COLOR1,
+                    size: 30.0,
+                  ),
                 ),
-              ),
-            )));
+                Text(_preferencesController.userLocation.value),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ));
   }
 }
 

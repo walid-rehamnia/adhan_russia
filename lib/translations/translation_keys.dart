@@ -10,10 +10,12 @@ const settings = 'settings';
 const adanNotification = 'adanNotification';
 const prayerNotification = 'prayerNotification';
 const mode = 'mode';
+const language = 'language';
 const standard = 'standard';
 const custom = 'custom';
 const currentLocation = "currentLocation";
 
+const notificationOptions = "notificationOptions";
 const adanNotificationTitle = 'adanNotificationTitle';
 const iqamaNotificationTitle = 'iqamaNotificationTitle';
 
@@ -21,11 +23,12 @@ const otherNotification = 'otherNotification';
 const english = "english";
 const arabic = "arabic";
 const russian = "russian";
-const loading = "loading...";
+const loading = "loading";
 const done = "done";
 
-// const hijriDay = '';
-// const hijriMonth = '';
+const schedulePrayer = "schedulePrayer";
+const scheduleTime = "scheduleTime";
+const schedulePassed = "schedulePassed";
 
 const about = 'about';
 

@@ -3,6 +3,7 @@ import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils/utils_data.dart';
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 Future<void> setTimeMode(String mode) async {
@@ -43,4 +44,18 @@ void setDefaultLanguage(String? newLanguage) {
     Get.updateLocale(const Locale('ru', 'RU'));
     preferencesController.updatePreference("defaultLanguage", "russian");
   }
+}
+
+Future<String> updateUserLocation() async {
+  Position position = await getGPSPosition();
+
+  PreferencesController preferencesController =
+      Get.find<PreferencesController>();
+
+  preferencesController.updatePreference('positionLatitude', position.latitude);
+  preferencesController.updatePreference(
+      'positionLongitude', position.longitude);
+  String address =
+      await getCoordinatesAddress(position.latitude, position.longitude);
+  return address;
 }

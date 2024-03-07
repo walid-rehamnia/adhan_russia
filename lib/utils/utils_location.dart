@@ -8,14 +8,14 @@ Future<Coordinates> getCoordinates() async {
   try {
     //Function that ensure that coordinates are properly saved on local
     late final Position position;
-    late final Coordinates my_coordinates;
+    late final Coordinates myCoordinates;
     PreferencesController preferencesController =
         Get.find<PreferencesController>();
     final double latitude = preferencesController.positionLatitude.value;
     final double longitude = preferencesController.positionLongitude.value;
 
     if (latitude != 0.0 && longitude != 0.0) {
-      my_coordinates = Coordinates(latitude, longitude);
+      myCoordinates = Coordinates(latitude, longitude);
     } else {
       position = await getGPSPosition();
 
@@ -23,9 +23,9 @@ Future<Coordinates> getCoordinates() async {
           'positionLatitude', position.latitude);
       preferencesController.updatePreference(
           'positionLongitude', position.longitude);
-      my_coordinates = Coordinates(position.latitude, position.longitude);
+      myCoordinates = Coordinates(position.latitude, position.longitude);
     }
-    return my_coordinates;
+    return myCoordinates;
   } catch (e) {
     throw Exception('Unable to get user coordinates');
   }

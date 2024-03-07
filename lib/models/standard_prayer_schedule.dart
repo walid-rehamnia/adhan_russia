@@ -16,7 +16,10 @@ class StandardPrayerSchedule extends PrayerSchedule {
     print('Standard Prayer Times');
     calendarDate = date;
     final Coordinates myCoordinates = await getCoordinates();
-    final params = CalculationMethod.karachi.getParameters();
+    final params = CalculationMethod.north_america.getParameters();
+    // final params = CalculationMethod.tehran.getParameters();
+    // final params = CalculationMethod.umm_al_qura.getParameters();
+
     params.madhab = Madhab.hanafi;
     prayerTimes = PrayerTimes.today(myCoordinates, params);
 

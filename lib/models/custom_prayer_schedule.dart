@@ -65,8 +65,8 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
   @override
   void update() {
-    // now = DateTime.now();
-    now = DateTime(now.year, now.month, now.day, 4, 50, 0);
+    now = DateTime.now();
+    // now = DateTime(now.year, now.month, now.day, 4, 50, 0);
 
     //Answers the question about the current and next prayer, at the current time
     int i = 0;
