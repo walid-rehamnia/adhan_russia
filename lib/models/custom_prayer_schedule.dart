@@ -80,24 +80,20 @@ class CustomPrayerSchedule extends PrayerSchedule {
       difference = getDifference(now.hour, now.minute, hours, minutes);
       print("${prayers[i].name}: $difference");
       switch (difference) {
-        case 0:
+        case <= IQAMA_TIME_OUT && >= 0:
           {
-            print('case 0');
+            print('case <= IQAMA_TIME_OUT && >= 0');
+
             currentPrayer = prayers[i];
             currentPrayer.status = "now";
             nextPrayer = currentPrayer;
-            notifyAdhan();
-          }
-          break outerLoop;
-        case <= IQAMA_TIME_OUT && > 0:
-          {
-            print('case <= IQAMA_TIME_OUT && > 0');
-
-            currentPrayer = prayers[i];
             // currentPrayer.status = "passed";
             // nextPrayer = prayers[(i + 1) % prayers.length];
-            nextPrayer = currentPrayer;
-            notifyIqama();
+            if (difference == 0) {
+              notifyAdhan();
+            } else if (difference == IQAMA_TIME_OUT) {
+              notifyIqama();
+            }
           }
           break outerLoop;
         case < 0:
@@ -120,12 +116,13 @@ class CustomPrayerSchedule extends PrayerSchedule {
     }
 
     if (i == prayers.length) {
-      print('casssssssssssssssssssss');
+      print('after isha before 00:00');
       currentPrayer = prayers[prayers.length - 1];
       nextPrayer = prayers[0];
 
       hours = int.parse(nextPrayer.time.split(":")[0]);
       minutes = int.parse(nextPrayer.time.split(":")[1]);
+
       DateTime tomorrowDateTime = now.add(NEXT_DAY_DURATION);
       nextPrayerDateTime = DateTime(tomorrowDateTime.year,
           tomorrowDateTime.month, tomorrowDateTime.day, hours, minutes, 0);

@@ -21,7 +21,8 @@ Future<void> main() async {
   );
 
   PreferencesController myController = PreferencesController();
-  await myController.loadPreferences();
+  await myController
+      .loadPreferences(); //to ensure that my preference has been loaded before proceding
 
   Get.put(myController);
 
