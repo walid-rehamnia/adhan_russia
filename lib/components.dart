@@ -1,5 +1,6 @@
 import 'package:adan_russia/controllers.dart';
 import 'package:adan_russia/screens/about_page.dart';
+import 'package:adan_russia/screens/choice_screen.dart';
 
 import 'package:adan_russia/screens/prayer_screen.dart';
 
@@ -19,7 +20,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final List<Widget> pages = [
     const PrayerScreen(),
     SettingsScreen(),
-    AboutPage()
+    const ChoiceScreen()
   ];
 
   @override

@@ -29,9 +29,9 @@ class En {
         translation.iqamaNotificationTitle: 'Time for @prayer prayer',
         translation.otherNotification: 'Other notification',
         translation.about: "About",
-        translation.english: "English",
-        translation.arabic: "Arabic",
-        translation.russian: "Russian",
+        translation.en: "English",
+        translation.ar: "Arabic",
+        translation.ru: "Russian",
         translation.loading: "Loading ...",
         translation.done: "done",
       };

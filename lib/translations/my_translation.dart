@@ -1,6 +1,7 @@
 import 'package:adan_russia/preferences.dart';
 import 'package:get/get.dart';
-import 'dart:ui' as ui;
+// import 'dart:ui' as ui;
+import 'dart:io';
 
 import 'ar.dart';
 import 'en.dart';
@@ -10,17 +11,11 @@ import 'package:flutter/material.dart';
 class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-        'en_US': En().messages,
-        'ar_AR': Ar().messages,
-        'ru_RU': Ar().messages,
+        'en': En().messages,
+        'ar': Ar().messages,
+        'ru': Ar().messages,
       };
 }
-
-List<String> supportedLocales = [
-  'ar',
-  'en',
-  'ru'
-]; // Add more languages as needed
 
 List<Locale> getSupportedLocales() {
   return MyTranslations().keys.keys.map((localeKey) {
@@ -29,17 +24,18 @@ List<Locale> getSupportedLocales() {
   }).toList();
 }
 
+List<String> getSupportedLanguages() {
+  return MyTranslations().keys.keys.map((localeKey) {
+    return localeKey.tr;
+  }).toList();
+}
+
 void setLocale() {
-  print('####################setlocale');
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
   String language = preferencesController.defaultLanguage.value;
-  print('language : $language');
+  // language=language:
   switch (language) {
-    case "":
-      {
-        print('nnnnnnnn');
-      }
     case "english":
       Get.updateLocale(const Locale('en', 'US'));
       break;
@@ -50,5 +46,27 @@ void setLocale() {
       Get.updateLocale(const Locale('ru', 'RU'));
       break;
     default:
+      Get.updateLocale(const Locale('en', 'US'));
+  }
+}
+
+void setLanguage() {
+  PreferencesController preferencesController =
+      Get.find<PreferencesController>();
+  String language = preferencesController.defaultLanguage.value;
+  //If saved language is null, get the one of the device
+  language = language != "" ? language : Platform.localeName.split("_")[0];
+  switch (language) {
+    case "en":
+      Get.updateLocale(const Locale('en', 'US'));
+      break;
+    case "ar":
+      Get.updateLocale(const Locale('ar', 'AR'));
+      break;
+    case "ru":
+      Get.updateLocale(const Locale('ru', 'RU'));
+      break;
+    default:
+      Get.updateLocale(const Locale('en', 'US'));
   }
 }

@@ -33,16 +33,17 @@ Future<void> setTimeMode(String mode) async {
 void setDefaultLanguage(String? newLanguage) {
   final PreferencesController preferencesController =
       Get.find<PreferencesController>();
-  if (newLanguage == "english".tr) {
+
+  if (newLanguage == "en".tr) {
     Get.updateLocale(const Locale('en', 'US'));
 
-    preferencesController.updatePreference("defaultLanguage", "english");
-  } else if (newLanguage == 'arabic'.tr) {
-    Get.updateLocale(const Locale('ar', 'ar'));
-    preferencesController.updatePreference("defaultLanguage", "arabic");
+    preferencesController.updatePreference("defaultLanguage", "en");
+  } else if (newLanguage == 'ar'.tr) {
+    Get.updateLocale(const Locale('ar', 'AR'));
+    preferencesController.updatePreference("defaultLanguage", "ar");
   } else {
     Get.updateLocale(const Locale('ru', 'RU'));
-    preferencesController.updatePreference("defaultLanguage", "russian");
+    preferencesController.updatePreference("defaultLanguage", "ru");
   }
 }
 

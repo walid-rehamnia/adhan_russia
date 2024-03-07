@@ -16,7 +16,6 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
   bool isLoading = false;
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
-
   @override
   Widget build(BuildContext context) {
     return Center(

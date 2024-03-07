@@ -29,9 +29,9 @@ class Ar {
         translation.iqamaNotificationTitle: 'الآن موعد إقامة صلاة @prayer',
         translation.otherNotification: 'تنبيهات أخرى',
         translation.about: "حول",
-        translation.english: "الإنجليزية",
-        translation.arabic: "العربية",
-        translation.russian: "الروسية",
+        translation.en: "الإنجليزية",
+        translation.ar: "العربية",
+        translation.ru: "الروسية",
         translation.loading: "جاري التحميل ...",
         translation.done: "تم",
       };

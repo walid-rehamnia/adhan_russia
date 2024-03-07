@@ -1,5 +1,6 @@
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/preferences.dart';
+import 'package:adan_russia/translations/my_translation.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -44,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     selectedRadio = _preferencesController.timingMode.value;
     // currentLanguage = "english".tr;
 
-    _preferencesController.updatePreference("defaultLanguage", "english");
+    _preferencesController.updatePreference("defaultLanguage", "en");
     currentLocation = _preferencesController.userLocation.value;
     // TODO: implement initState
     super.initState();
@@ -113,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setDefaultLanguage(newValue!);
                 EasyLoading.showSuccess('done'.tr);
               },
-              items: <String>['arabic'.tr, 'english'.tr, 'russian'.tr]
+              items: getSupportedLanguages()
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,

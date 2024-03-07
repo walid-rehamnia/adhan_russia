@@ -20,9 +20,9 @@ const adanNotificationTitle = 'adanNotificationTitle';
 const iqamaNotificationTitle = 'iqamaNotificationTitle';
 
 const otherNotification = 'otherNotification';
-const english = "english";
-const arabic = "arabic";
-const russian = "russian";
+const en = "en";
+const ar = "ar";
+const ru = "ru";
 const loading = "loading";
 const done = "done";
 

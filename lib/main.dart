@@ -26,7 +26,7 @@ Future<void> main() async {
 
   Get.put(myController);
 
-  setLocale();
+  setLanguage();
 
   runApp(const MyApp());
 }
