@@ -1,6 +1,7 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/choice_screen.dart';
+import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // Show a loading indicator while downloading
-              return const CircularProgressIndicator();
+              return const MyProgressLoader();
             } else if (snapshot.hasError) {
               // Show an error message if file download fails
               ScaffoldMessenger.of(context).showSnackBar(

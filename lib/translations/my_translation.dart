@@ -30,43 +30,38 @@ List<String> getSupportedLanguages() {
   }).toList();
 }
 
-void setLocale() {
-  PreferencesController preferencesController =
-      Get.find<PreferencesController>();
-  String language = preferencesController.defaultLanguage.value;
-  // language=language:
-  switch (language) {
-    case "english":
-      Get.updateLocale(const Locale('en', 'US'));
-      break;
-    case "arabic":
-      Get.updateLocale(const Locale('ar', 'AR'));
-      break;
-    case "russian":
-      Get.updateLocale(const Locale('ru', 'RU'));
-      break;
-    default:
-      Get.updateLocale(const Locale('en', 'US'));
-  }
-}
+// void setLocale() {
+//   PreferencesController preferencesController =
+//       Get.find<PreferencesController>();
+//   String language = preferencesController.defaultLanguage.value;
+//   // language=language:
+//   switch (language) {
+//     case "english":
+//       Get.updateLocale(const Locale('en', 'US'));
+//       break;
+//     case "arabic":
+//       Get.updateLocale(const Locale('ar', 'AR'));
+//       break;
+//     case "russian":
+//       Get.updateLocale(const Locale('ru', 'RU'));
+//       break;
+//     default:
+//       Get.updateLocale(const Locale('en', 'US'));
+//   }
+// }
 
-void setLanguage() {
+void initDefaultLanguage() {
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
   String language = preferencesController.defaultLanguage.value;
   //If saved language is null, get the one of the device
   language = language != "" ? language : Platform.localeName.split("_")[0];
-  switch (language) {
-    case "en":
-      Get.updateLocale(const Locale('en', 'US'));
-      break;
-    case "ar":
-      Get.updateLocale(const Locale('ar', 'AR'));
-      break;
-    case "ru":
-      Get.updateLocale(const Locale('ru', 'RU'));
-      break;
-    default:
-      Get.updateLocale(const Locale('en', 'US'));
+
+  language = getSupportedLanguages().contains(language.tr) ? language : "en";
+
+  Get.updateLocale(Locale(language, language.toUpperCase()));
+
+  if (preferencesController.defaultLanguage.value != language) {
+    preferencesController.updatePreference("defaultLanguage", language);
   }
 }

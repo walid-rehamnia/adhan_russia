@@ -18,8 +18,8 @@ class PrayerSchedule {
   late DateTime now;
   late int prayerIndex;
   late DateTime nextPrayerDateTime;
-  late bool isAdhan;
-  late bool isIqama;
+  late bool isAdanNotified;
+  late bool isIqamaNotified;
   int difference = 0;
   late DateTime prayerDateTime;
 
@@ -29,8 +29,8 @@ class PrayerSchedule {
     _preferencesController = Get.find<PreferencesController>();
     now = DateTime.now();
     nextPrayerDateTime = now;
-    isAdhan = false;
-    isIqama = false;
+    isAdanNotified = false;
+    isIqamaNotified = false;
   }
 
   Future<void> init(DateTime date) async {}
@@ -42,9 +42,9 @@ class PrayerSchedule {
   }
 
   void notifyAdhan() {
-    if (_preferencesController.isNotifyAdhan.value && !isAdhan) {
-      isAdhan = false;
-      isIqama = false;
+    if (_preferencesController.isNotifyAdhan.value && !isAdanNotified) {
+      isAdanNotified = true;
+      isIqamaNotified = false;
 
       PrayerNotification.prayerNotification(
           title: "adanNotificationTitle"
@@ -56,9 +56,9 @@ class PrayerSchedule {
   }
 
   void notifyIqama() {
-    if (_preferencesController.isNotifyIqama.value && !isIqama) {
-      isIqama = true;
-      isAdhan = false;
+    if (_preferencesController.isNotifyIqama.value && !isIqamaNotified) {
+      isIqamaNotified = true;
+      isAdanNotified = false;
 
       PrayerNotification.prayerNotification(
           title: "iqamaNotificationTitle"

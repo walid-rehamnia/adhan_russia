@@ -1,3 +1,4 @@
+import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/controllers.dart';
 import 'package:adan_russia/screens/about_page.dart';
 import 'package:adan_russia/screens/choice_screen.dart';
@@ -20,7 +21,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final List<Widget> pages = [
     const PrayerScreen(),
     SettingsScreen(),
-    const ChoiceScreen()
+    ChoiceScreen()
   ];
 
   @override
@@ -28,17 +29,23 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     return Scaffold(
       body: Obx(() => pages[_controller.selectedIndex.value]),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: MAIN_COLOR,
+        enableFeedback: true,
+        selectedItemColor: Colors.black,
+        elevation: 5.0,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             label: 'home'.tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings_accessibility_rounded),
+            icon: const Icon(
+              Icons.settings,
+            ),
             label: "settings".tr,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit_notifications_rounded),
+            icon: const Icon(Icons.edit_notifications_rounded),
             label: 'about'.tr,
           ),
         ],

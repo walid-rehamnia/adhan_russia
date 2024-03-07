@@ -1,4 +1,5 @@
 import 'package:adan_russia/constatnts.dart';
+import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,8 +38,8 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: pdfPath.isEmpty
-          ? Center(
-              child: CircularProgressIndicator(),
+          ? const Center(
+              child: MyProgressLoader(),
             )
           : PDFView(
               filePath: pdfPath,

@@ -1,5 +1,7 @@
 import 'package:adan_russia/components.dart';
+import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/preferences.dart';
+import 'package:adan_russia/utils/utils.dart';
 import 'package:adan_russia/utils/utils_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,71 +15,58 @@ class ChoiceScreen extends StatefulWidget {
 }
 
 class _ChoiceScreenState extends State<ChoiceScreen> {
-  bool isLoading = false;
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            ChoiceButton(
-              title: ' Standard Mode (Anywhere)',
-              description:
-                  "Calculate the prayer time based on different global used parameters (you will be able to customize them soon in app parameters)",
-              onPressed: () async {
-                // Start loading
-                EasyLoading.show(status: 'loading...'.tr);
+      child: Container(
+        decoration: BACKGROUND_SCREEN,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ChoiceButton(
+                title: 'standard'.tr,
+                description:
+                    "Calculate the prayer time based on different global used parameters (you will be able to customize them soon in app parameters)",
+                onPressed: () async {
+                  EasyLoading.show(status: 'loading'.tr);
 
-                try {
-                  await setTimeMode('standard');
-                  setState(() {
-                    isLoading = false;
-                  });
+                  try {
+                    await setTimeMode('standard');
+                    EasyLoading.showSuccess('done'.tr);
+                    EasyLoading.dismiss();
+                    Get.to(() => MyBottomNavigationBar());
+                  } catch (e) {
+                    EasyLoading.showError('$e');
+                    EasyLoading.dismiss();
+                  }
+                },
+              ),
+              const SizedBox(height: 16.0), // Add some spacing between buttons
+              ChoiceButton(
+                title: 'custom'.tr,
+                description:
+                    "Bsed on the calendars used in the russian mosques which has been issued from ....., for now it's limited to 'Nizhny Novgorod' city, help us with your city calendars so we'll covers more cities",
+                onPressed: () async {
+                  EasyLoading.show(status: 'loading'.tr);
 
-                  Get.to(() => MyBottomNavigationBar());
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.toString()),
-                      duration: const Duration(seconds: 3),
-                    ),
-                  );
-                }
-              },
-            ),
-            const SizedBox(height: 16.0), // Add some spacing between buttons
-            ChoiceButton(
-              title: 'Custom Mode (more accurate / Limited cities)',
-              description:
-                  "Bsed on the calendars used in the russian mosques which has been issued from ....., for now it's limited to 'Nizhny Novgorod' city, help us with your city calendars so we'll covers more cities",
-              onPressed: () async {
-                // Start loading
-                setState(() {
-                  isLoading = true;
-                });
-                try {
-                  await setTimeMode('custom');
-
-                  setState(() {
-                    isLoading = false;
-                  });
-                  Get.to(() => MyBottomNavigationBar());
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.toString()),
-                      duration: const Duration(seconds: 3),
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+                  try {
+                    await setTimeMode('custom');
+                    EasyLoading.showSuccess('done'.tr);
+                    EasyLoading.dismiss();
+                    Get.to(() => MyBottomNavigationBar());
+                  } catch (e) {
+                    EasyLoading.showError('$e');
+                    EasyLoading.dismiss();
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -99,13 +88,15 @@ class ChoiceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: () async {
+        onPressed();
+      },
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.all(16.0),
-        // primary: Colors.blue, // Set button color
-        // onPrimary: Colors.white, // Set text color
+        backgroundColor: MAIN_COLOR,
+        foregroundColor: TEXT_COLOR,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), // Add rounded corners
+          borderRadius: BorderRadius.circular(20.0), // Add rounded corners
         ),
       ),
       child: Column(
@@ -114,7 +105,8 @@ class ChoiceButton extends StatelessWidget {
           Center(
             child: Text(
               title,
-              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              style:
+                  const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 12.0),

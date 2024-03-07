@@ -14,3 +14,13 @@ String formatDuration(int minutes) {
 
   return formattedDuration;
 }
+
+Future<String> fakeAsyncFunction(int seconds) async {
+  // Simulate an asynchronous operation that takes 2 seconds
+  await Future.delayed(Duration(seconds: seconds));
+
+  print("End of fakeAsyncFunction");
+
+  // Return a result
+  return "Fake Async Result";
+}

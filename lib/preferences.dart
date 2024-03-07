@@ -39,7 +39,6 @@ class PreferencesController extends GetxController {
 
     isNotifyAdhan.value = prefs.getBool('isNotifyAdhan') ?? true;
     isNotifyIqama.value = prefs.getBool('isNotifyIqama') ?? true;
-    print('loading**********************************$defaultLanguage');
   }
 
   Future<void> updatePreference(String prefName, var value) async {

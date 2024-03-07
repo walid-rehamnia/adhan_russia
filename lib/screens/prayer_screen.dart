@@ -7,6 +7,7 @@ import 'package:adan_russia/models/custom_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/pdf_page.dart';
+import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -59,53 +60,99 @@ class _PrayerScreenState extends State<PrayerScreen> {
   Widget build(BuildContext context) {
     double containerWidth = MediaQuery.of(context).size.width * 0.9;
     double containerHeight = MediaQuery.of(context).size.height * 0.6;
-    return Scaffold(
-      body: SafeArea(
-        child: isLoading == true
-            ? const CircularProgressIndicator(color: Color(0xFFE26B26))
-            : Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        'assets/${_prayerSchedule.currentPrayer.index}.jpg'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(
-                          1), // Adjust the opacity here (0.0 to 1.0)
-                      BlendMode.dstATop,
-                    ),
+    return Center(
+      child: isLoading == true
+          ? const MyProgressLoader()
+          : Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/${_prayerSchedule.currentPrayer.index}.jpg'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                    Colors.black
+                        .withOpacity(1), // Adjust the opacity here (0.0 to 1.0)
+                    BlendMode.dstATop,
                   ),
                 ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Column(
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.location_on,
+                              color: MAIN_COLOR1,
+                              size: 30.0,
+                            ),
+                          ),
+                          Text(_preferencesController.userLocation.value),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: containerWidth / 3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/back4.jpg'), // Replace with your image asset
+                          fit: BoxFit.cover,
+
+                          colorFilter: ColorFilter.mode(
+                            Colors.black.withOpacity(
+                                0.5), // Adjust the opacity here (0.0 to 1.0)
+                            BlendMode.dstATop,
+                          ),
+                        ),
+                      ),
+                      child: Center(
                         child: Column(
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.location_on,
-                                color: MAIN_COLOR1,
-                                size: 30.0,
+                            Text(
+                              _prayerSchedule.getRemainingTime(),
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
                             ),
-                            Text(_preferencesController.userLocation.value),
+                            Text(
+                              _prayerSchedule.nextPrayer.name.tr,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        width: containerWidth / 3,
+                    ),
+                    // Left and right arrow buttons for navigation
+
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    // Display the DataTable
+                    Container(
+                        width: containerWidth,
+                        height: containerHeight,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                           image: DecorationImage(
                             image: AssetImage(
-                                'assets/back4.jpg'), // Replace with your image asset
+                                'assets/back3.jpg'), // Replace with your image asset
                             fit: BoxFit.cover,
 
                             colorFilter: ColorFilter.mode(
@@ -115,111 +162,62 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             ),
                           ),
                         ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                _prayerSchedule.getRemainingTime(),
-                                style: const TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Text(
-                                _prayerSchedule.nextPrayer.name.tr,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Left and right arrow buttons for navigation
-
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      // Display the DataTable
-                      Container(
-                          width: containerWidth,
-                          height: containerHeight,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/back3.jpg'), // Replace with your image asset
-                              fit: BoxFit.cover,
-
-                              colorFilter: ColorFilter.mode(
-                                Colors.black.withOpacity(
-                                    0.5), // Adjust the opacity here (0.0 to 1.0)
-                                BlendMode.dstATop,
-                              ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 10,
-                              ),
-                              _preferencesController.timingMode.value ==
-                                      'custom'
-                                  ? customCalendarHeader()
-                                  : defaultCalendarHeader(),
-                              SizedBox(height: 10),
-                              DataTable(
-                                columns: [
-                                  DataColumn(
-                                    label: Text('schedulePrayer'.tr),
-                                    numeric: true,
+                            _preferencesController.timingMode.value == 'custom'
+                                ? customCalendarHeader()
+                                : defaultCalendarHeader(),
+                            SizedBox(height: 10),
+                            DataTable(
+                              columns: [
+                                DataColumn(
+                                  label: Text('schedulePrayer'.tr),
+                                  numeric: true,
+                                ),
+                                DataColumn(
+                                  label: Container(
+                                    child: Text('scheduleTime'.tr),
                                   ),
-                                  DataColumn(
-                                    label: Container(
-                                      child: Text('scheduleTime'.tr),
-                                    ),
-                                    numeric: true,
-                                  ),
-                                  DataColumn(
-                                    label: Text('schedulePassed'.tr),
-                                    numeric: true,
-                                  ),
-                                ],
-                                dividerThickness: 1.5,
-                                dataTextStyle: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
-                                rows: prayers.asMap().entries.map((entry) {
-                                  final index = entry.key;
-                                  final prayer = entry.value;
-                                  // final isSelected = index ==2; // Change this to the index of the current prayer
-                                  final isSelected = isTodayCalendar &&
-                                      (prayer.name ==
-                                          _prayerSchedule.nextPrayer.name);
-                                  return DataRow(
-                                    selected: isSelected,
-                                    cells: [
-                                      DataCell(Text(prayer.name.tr)),
-                                      DataCell(Text(prayer.time)),
-                                      DataCell(Checkbox(
-                                          value: isTodayCalendar &&
-                                              (prayer.status == 'passed'),
-                                          onChanged: (bool? value) {})),
-                                    ],
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          )),
-                      SizedBox(height: 20),
-                    ],
-                  ),
+                                  numeric: true,
+                                ),
+                                DataColumn(
+                                  label: Text('schedulePassed'.tr),
+                                  numeric: true,
+                                ),
+                              ],
+                              dividerThickness: 1.5,
+                              dataTextStyle: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                              rows: prayers.asMap().entries.map((entry) {
+                                final index = entry.key;
+                                final prayer = entry.value;
+                                // final isSelected = index ==2; // Change this to the index of the current prayer
+                                final isSelected = isTodayCalendar &&
+                                    (prayer.name ==
+                                        _prayerSchedule.nextPrayer.name);
+                                return DataRow(
+                                  selected: isSelected,
+                                  cells: [
+                                    DataCell(Text(prayer.name.tr)),
+                                    DataCell(Text(prayer.time)),
+                                    DataCell(Checkbox(
+                                        value: isTodayCalendar &&
+                                            (prayer.status == 'passed'),
+                                        onChanged: (bool? value) {})),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        )),
+                    SizedBox(height: 20),
+                  ],
                 ),
               ),
-      ),
+            ),
     );
   }
 

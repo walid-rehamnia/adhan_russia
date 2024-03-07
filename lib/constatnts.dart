@@ -41,6 +41,18 @@ const int IQAMA_TIME_OUT = 15;
 const Duration IQAMA_DURATION = Duration(minutes: -IQAMA_TIME_OUT);
 const Duration NEXT_DAY_DURATION = Duration(days: 1);
 
-const MaterialColor? MAIN_COLOR1 = Colors.blue;
+const MaterialColor? MAIN_COLOR1 = Colors.blueGrey;
 
-Color MAIN_COLOR = Colors.blue;
+Color MAIN_COLOR = Color.fromRGBO(173, 193, 217, 1.0);
+const TEXT_COLOR = Colors.black;
+
+BoxDecoration BACKGROUND_SCREEN = BoxDecoration(
+  image: DecorationImage(
+    image: AssetImage('assets/back.jpg'),
+    fit: BoxFit.cover,
+    colorFilter: ColorFilter.mode(
+      Colors.black.withOpacity(0.3), // Adjust the opacity here (0.0 to 1.0)
+      BlendMode.dstATop,
+    ),
+  ),
+);

@@ -5,7 +5,7 @@ class Ar {
         translation.home: 'الصفحة الرئيسية',
         translation.schedulePrayer: 'الصلاة',
         translation.scheduleTime: 'وقت الأذان',
-        translation.schedulePassed: 'هل مرت ؟',
+        translation.schedulePassed: "هل انتهت ؟",
 
         translation.remaining: 'بقي @duration لصلاة',
         translation.fadjr: 'الفجر',

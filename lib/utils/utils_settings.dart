@@ -30,10 +30,9 @@ Future<void> setTimeMode(String mode) async {
   preferencesController.updatePreference("timingMode", mode);
 }
 
-void setDefaultLanguage(String? newLanguage) {
+void updateDefaultLanguage(String? newLanguage) {
   final PreferencesController preferencesController =
       Get.find<PreferencesController>();
-
   if (newLanguage == "en".tr) {
     Get.updateLocale(const Locale('en', 'US'));
 
@@ -56,7 +55,9 @@ Future<String> updateUserLocation() async {
   preferencesController.updatePreference('positionLatitude', position.latitude);
   preferencesController.updatePreference(
       'positionLongitude', position.longitude);
+
   String address =
       await getCoordinatesAddress(position.latitude, position.longitude);
+
   return address;
 }

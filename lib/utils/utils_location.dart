@@ -43,7 +43,7 @@ Future<Position> getGPSPosition() async {
     // App to enable the location services.
     await Geolocator.openAppSettings();
     await Geolocator.openLocationSettings();
-    return Future.error('Location services are disabled.');
+    // return Future.error('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
@@ -64,7 +64,6 @@ Future<Position> getGPSPosition() async {
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
-
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
   return await Geolocator.getCurrentPosition();
