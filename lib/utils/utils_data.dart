@@ -156,14 +156,6 @@ Future<void> checkFirstInstallation() async {
   if (year == '' || year != currentYear) {
     await downloadCalendarData("Nizhny_Novgorod");
     _preferencesController.updatePreference("calendarYear", currentYear);
-
-    PermissionStatus status = await Permission.notification.request();
-    if (status.isGranted) {
-      print("Great!, you'll be notified about the incoming prayers");
-    } else {
-      print(
-          "Unfortunately!, you  won't be notified about the incoming prayers");
-    }
   }
 }
 

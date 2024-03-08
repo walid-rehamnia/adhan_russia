@@ -17,7 +17,6 @@ class StandardPrayerSchedule extends PrayerSchedule {
     calendarDate = date;
     final Coordinates myCoordinates = await getCoordinates();
     final params = getCalculationParameters();
-    // final params = CalculationMethod.tehran.getParameters();
     // final params = CalculationMethod.umm_al_qura.getParameters();
 
     params.madhab = Madhab.hanafi;

@@ -9,6 +9,8 @@ class En {
 
         translation.remaining: 'It remains @duration for',
         translation.fadjr: 'Fadjr',
+        translation.sunrise: 'Sunrise',
+
         translation.dhuhr: 'Dhuhr',
         translation.asr: 'Asr',
         translation.maghreb: 'Maghreb',
@@ -25,7 +27,7 @@ class En {
             "Calculate prayer times anywhere in the world; the calculation methods can be changed in the settings.",
         translation.customDesc:
             'Calculate prayer times based on the calendar used in Russian mosques; for now, only data for "Nizhny Novgorod" city are obtained. Feel free to help us cover all the cities.',
-        translation.methodButton: "Change calculation method",
+        translation.methodButton: "Used method : @method",
         translation.dubai: "Dubai",
         translation.egyptian: "egyptian",
         translation.kuwait: "kuwait",

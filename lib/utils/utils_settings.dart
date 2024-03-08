@@ -1,34 +1,40 @@
 import 'package:adan_russia/preferences.dart';
-import 'package:adan_russia/translations/my_translation.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils/utils_data.dart';
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> setTimeMode(String mode) async {
   final PreferencesController preferencesController =
       Get.find<PreferencesController>();
-
+  late final String location;
   if (mode == "standard") {
     final Coordinates coordinates = await getCoordinates();
-
-    preferencesController.updatePreference("userLocation",
-        getCoordinatesAddress(coordinates.latitude, coordinates.longitude));
     //get location address based by giving coordinates
-    final String location = await getCoordinatesAddress(
+    location = await getCoordinatesAddress(
         coordinates.latitude, coordinates.longitude);
-
-    preferencesController.updatePreference("userLocation", location);
+    setCalculationMethod("north_america");
   }
   //else custom mode
   else {
-    await checkFirstInstallation();
-    preferencesController.updatePreference(
-        "userLocation", "Nizhny Novgorod, Russia");
+    location = "Nizhny Novgorod, Russia";
   }
+//I will download in both case, so the user has not to wait the download later (specially if he havn't connection)
+  await checkFirstInstallation();
+
+  preferencesController.updatePreference("userLocation", location);
+
   preferencesController.updatePreference("timingMode", mode);
+
+  PermissionStatus status = await Permission.notification.request();
+  if (status.isGranted) {
+    print("Great!, you'll be notified about the incoming prayers");
+  } else {
+    print("Unfortunately!, you  won't be notified about the incoming prayers");
+  }
 }
 
 void updateDefaultLanguage(String? newLanguage) {
@@ -36,11 +42,6 @@ void updateDefaultLanguage(String? newLanguage) {
 
   final PreferencesController preferencesController =
       Get.find<PreferencesController>();
-
-  // Get.updateLocale(const Locale('en', 'US'));
-
-  // preferencesController.updatePreference("defaultLanguage", "en");
-  // return;
 
   if (newLanguage == "en".tr) {
     Get.updateLocale(const Locale('en', 'US'));
@@ -72,7 +73,6 @@ Future<String> updateUserLocation() async {
 }
 
 void setCalculationMethod(String calculationMethod) {
-  print('updating$calculationMethod');
   PreferencesController preferencesController =
       Get.find<PreferencesController>();
   preferencesController.updatePreference(

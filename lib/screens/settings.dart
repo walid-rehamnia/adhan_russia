@@ -116,20 +116,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
                 },
               ),
+              const SizedBox(
+                height: 5,
+              ),
               if (selectedRadio == "standard")
                 Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: MAIN_COLOR,
-                    ),
-                    child: Text(
-                      "methodButton".tr,
-                      style: const TextStyle(
-                          fontFamily: 'Amiri',
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  child: TextButton.icon(
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -138,6 +130,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       );
                     },
+                    icon: const Icon(
+                        color: Colors.black,
+                        Icons.edit), // Replace with your desired icon
+                    label: Text(
+                      "methodButton".trParams({
+                        "method":
+                            _preferencesController.calculationMethod.value.tr
+                      }),
+                      style: const TextStyle(
+                          fontFamily: 'Amiri',
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: MAIN_COLOR, // Set the background color
+                    ),
                   ),
                 ),
               const SizedBox(height: 10),
@@ -154,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: Text('adanNotification'.tr),
                 hoverColor: Colors.black,
                 checkColor: Colors.black,
-                activeColor: MAIN_COLOR1,
+                activeColor: MAIN_COLOR,
                 value: _preferencesController.isNotifyAdhan.value == true,
                 onChanged: (value) {
                   EasyLoading.show(status: 'loading'.tr);
@@ -168,7 +177,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: Text('prayerNotification'.tr),
                 hoverColor: Colors.black,
                 checkColor: Colors.black,
-                activeColor: MAIN_COLOR1,
+                activeColor: MAIN_COLOR,
                 value: _preferencesController.isNotifyIqama.value == true,
                 onChanged: (value) {
                   EasyLoading.show(status: 'loading'.tr);
@@ -188,23 +197,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 'currentLocation'.tr,
                 style: TITLE_STYLE,
               ),
-              Column(
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      EasyLoading.show(status: 'loading'.tr);
-                      await updateUserLocation();
-                      EasyLoading.showSuccess('done'.tr);
-                      EasyLoading.dismiss();
-                    },
-                    icon: const Icon(
-                      Icons.edit_location_alt_sharp,
-                      color: MAIN_COLOR1,
-                      size: 30.0,
-                    ),
+              Center(
+                child: TextButton.icon(
+                  onPressed: () async {
+                    EasyLoading.show(status: 'loading'.tr);
+                    await updateUserLocation();
+                    EasyLoading.showSuccess('done'.tr);
+                    EasyLoading.dismiss();
+                  },
+                  icon: const Icon(
+                      color: Colors.black,
+                      Icons
+                          .edit_location_alt_sharp), // Replace with your desired icon
+                  label: Text(
+                    _preferencesController.userLocation.value,
+                    style: const TextStyle(
+                        fontFamily: 'Amiri',
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
                   ),
-                  Text(_preferencesController.userLocation.value),
-                ],
+                  style: TextButton.styleFrom(
+                    backgroundColor: MAIN_COLOR, // Set the background color
+                  ),
+                ),
               ),
             ],
           ),
