@@ -9,6 +9,8 @@ class Ru {
 
         translation.remaining: 'Осталось @duration для',
         translation.fadjr: 'Фаджр',
+        translation.sunrise: 'Восход',
+
         translation.dhuhr: 'Дхухр',
         translation.asr: 'Аср',
         translation.maghreb: 'Магриб',
@@ -26,7 +28,7 @@ class Ru {
             "Рассчитывает время молитвы в любой точке мира; методы расчета можно изменить в настройках.",
         translation.customDesc:
             'Рассчитывает время молитвы на основе календаря, используемого в мечетях России; на данный момент доступны данные только для города "Нижний Новгород". Не стесняйтесь помочь нам охватить все города.',
-        translation.methodButton: "Изменить метод расчета",
+        translation.methodButton: "Используемый метод: @method",
         translation.dubai: "Дубай",
         translation.egyptian: "Египетский",
         translation.kuwait: "Кувейт",
@@ -53,5 +55,42 @@ class Ru {
         translation.ru: "Русский",
         translation.loading: "Загрузка...",
         translation.done: "готово",
+
+        // eng months
+        translation.january: "Январь",
+        translation.february: "Февраль",
+        translation.march: "Март",
+        translation.april: "Апрель",
+        translation.may: "Май",
+        translation.june: "Июнь",
+        translation.july: "Июль",
+        translation.august: "Август",
+        translation.september: "Сентябрь",
+        translation.october: "Октябрь",
+        translation.november: "Ноябрь",
+        translation.december: "Декабрь",
+
+        // Week days
+        translation.sunday: "Воскресенье",
+        translation.monday: "Понедельник",
+        translation.tuesday: "Вторник",
+        translation.wednesday: "Среда",
+        translation.thursday: "Четверг",
+        translation.friday: "Пятница",
+        translation.saturday: "Суббота",
+
+        // Hijri months
+        translation.h1: "Мухаррам",
+        translation.h2: "Сафар",
+        translation.h3: "Раби аль-Авваль",
+        translation.h4: "Раби аль-Тани",
+        translation.h5: "Джумада аль-Авваль",
+        translation.h6: "Джумада аль-Тани",
+        translation.h7: "Раджаб",
+        translation.h8: "Ша'бан",
+        translation.h9: "Рамадан",
+        translation.h10: "Шауваль",
+        translation.h11: "Ду аль-Кида",
+        translation.h12: "Ду аль-Хиджа",
       };
 }

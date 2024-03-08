@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'translations/translation_keys.dart' as translation;
 
@@ -24,7 +23,7 @@ const List<String> GREGORIAN_MONTHS = [
   "",
   "January",
   "February",
-  "Mars",
+  "March",
   "April",
   "May",
   "June",
@@ -37,8 +36,6 @@ const List<String> GREGORIAN_MONTHS = [
 ];
 
 const int IQAMA_TIME_OUT = 15;
-
-const Duration IQAMA_DURATION = Duration(minutes: -IQAMA_TIME_OUT);
 const Duration NEXT_DAY_DURATION = Duration(days: 1);
 
 const MaterialColor? MAIN_COLOR1 = Colors.blueGrey;

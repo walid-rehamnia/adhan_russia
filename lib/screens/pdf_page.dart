@@ -2,6 +2,7 @@ import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 class PDFViewerPage extends StatefulWidget {
@@ -64,7 +65,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
           height: 20.0,
           child: Center(
             child: Text(
-              '${GREGORIAN_MONTHS[currentPage]} ($currentPage/$totalPage)',
+              '${GREGORIAN_MONTHS[currentPage].tr} ($currentPage/$totalPage)',
               style: const TextStyle(fontSize: 17.0),
             ),
           ),
