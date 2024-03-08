@@ -1,4 +1,5 @@
 import 'package:adan_russia/preferences.dart';
+import 'package:adan_russia/translations/my_translation.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils/utils_data.dart';
 import 'package:adhan/adhan.dart';
@@ -31,8 +32,16 @@ Future<void> setTimeMode(String mode) async {
 }
 
 void updateDefaultLanguage(String? newLanguage) {
+  print('------------$newLanguage');
+
   final PreferencesController preferencesController =
       Get.find<PreferencesController>();
+
+  // Get.updateLocale(const Locale('en', 'US'));
+
+  // preferencesController.updatePreference("defaultLanguage", "en");
+  // return;
+
   if (newLanguage == "en".tr) {
     Get.updateLocale(const Locale('en', 'US'));
 

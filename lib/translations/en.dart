@@ -21,6 +21,10 @@ class En {
         translation.mode: 'Times calculation method:',
         translation.standard: 'Standard Mode (Anywhere)',
         translation.custom: 'Custom Mode (More accurate / Restricted cities)',
+        translation.standardDesc:
+            "Calculate prayer times anywhere in the world; the calculation methods can be changed in the settings.",
+        translation.customDesc:
+            'Calculate prayer times based on the calendar used in Russian mosques; for now, only data for "Nizhny Novgorod" city are obtained. Feel free to help us cover all the cities.',
         translation.methodButton: "Change calculation method",
         translation.dubai: "Dubai",
         translation.egyptian: "egyptian",

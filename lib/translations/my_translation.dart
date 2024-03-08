@@ -13,7 +13,7 @@ class MyTranslations extends Translations {
   Map<String, Map<String, String>> get keys => {
         'en': En().messages,
         'ar': Ar().messages,
-        'ru': Ar().messages,
+        'ru': Ru().messages,
       };
 }
 

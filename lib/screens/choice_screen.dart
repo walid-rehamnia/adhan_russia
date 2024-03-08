@@ -1,7 +1,6 @@
 import 'package:adan_russia/components.dart';
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/preferences.dart';
-import 'package:adan_russia/utils/utils.dart';
 import 'package:adan_russia/utils/utils_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -30,8 +29,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
             children: [
               ChoiceButton(
                 title: 'standard'.tr,
-                description:
-                    "Calculate the prayer time based on different global used parameters (you will be able to customize them soon in app parameters)",
+                description: "standardDesc".tr,
                 onPressed: () async {
                   EasyLoading.show(status: 'loading'.tr);
 
@@ -49,8 +47,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
               const SizedBox(height: 16.0), // Add some spacing between buttons
               ChoiceButton(
                 title: 'custom'.tr,
-                description:
-                    "Bsed on the calendars used in the russian mosques which has been issued from ....., for now it's limited to 'Nizhny Novgorod' city, help us with your city calendars so we'll covers more cities",
+                description: "customDesc".tr,
                 onPressed: () async {
                   EasyLoading.show(status: 'loading'.tr);
 

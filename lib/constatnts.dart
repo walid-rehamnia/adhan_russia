@@ -63,3 +63,5 @@ const TextStyle TITLE_STYLE = TextStyle(
   color: Colors.black,
   fontFamily: 'Amiri',
 );
+
+const String APP_NAME = "Adhan Russia";

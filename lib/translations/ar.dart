@@ -22,6 +22,10 @@ class Ar {
         translation.mode: 'طريقة حساب الأوقات',
         translation.standard: 'عادي',
         translation.custom: 'مخصص',
+        translation.standardDesc:
+            "حساب أوقات الصلاة في أي مكان بالعالم، يمكن تعديل طريقة الحساب المتبعة من الإعدادات لاحقا",
+        translation.customDesc:
+            'حساب أوقات الصلاة بدقة مستخرجة من الجاول التي تعتمدها المساجد الروسية. للآن لدينا فقط بيانات مدينة نيجني نوفغورود الروسية، ساعدنا بالبيانات لتغطية كل المدن الروسية',
         translation.methodButton: "اختر طريقة حساب أخرى",
         translation.dubai: "دبي",
         translation.egyptian: "مصر",

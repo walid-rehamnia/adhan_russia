@@ -60,6 +60,8 @@ dependencies:
   adhan: ^2.0.0+1
   flutter_launcher_icons: ^0.13.1
   flutter_easyloading: ^3.0.5
+  # url_launcher: ^6.2.5
+  # share_plus: ^7.2.2
 
 flutter_launcher_icons:
   android: "launcher_icon"

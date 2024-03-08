@@ -36,6 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     selectedRadio = _preferencesController.timingMode.value;
     // currentLanguage = "english".tr;
     currentLocation = _preferencesController.userLocation.value;
+    print(_preferencesController.defaultLanguage.value);
     // TODO: implement initState
     super.initState();
   }

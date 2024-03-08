@@ -6,6 +6,7 @@ import 'package:adan_russia/screens/choice_screen.dart';
 import 'package:adan_russia/screens/prayer_screen.dart';
 
 import 'package:adan_russia/screens/settings.dart';
+import 'package:adan_russia/screens/test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
