@@ -16,7 +16,9 @@ Future<void> setTimeMode(String mode) async {
     //get location address based by giving coordinates
     location = await getCoordinatesAddress(
         coordinates.latitude, coordinates.longitude);
-    setCalculationMethod("north_america");
+    if (preferencesController.calculationMethod.isEmpty) {
+      setCalculationMethod("north_america");
+    }
   }
   //else custom mode
   else {
