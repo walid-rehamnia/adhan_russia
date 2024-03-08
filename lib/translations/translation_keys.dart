@@ -69,3 +69,16 @@ const wednesday = 'Wednesday';
 const thursday = 'Thursday';
 const friday = 'Friday';
 const saturday = 'Saturday';
+
+const h1 = 'h1';
+const h2 = 'h2';
+const h3 = 'h3';
+const h4 = 'h4';
+const h5 = 'h5';
+const h6 = 'h6';
+const h7 = 'h7';
+const h8 = 'h8';
+const h9 = 'h9';
+const h10 = 'h10';
+const h11 = 'h11';
+const h12 = 'h12';

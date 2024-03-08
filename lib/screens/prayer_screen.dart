@@ -172,7 +172,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                         ),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             _preferencesController.timingMode.value == 'custom'
@@ -336,11 +336,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
     String year = yearFormat.format(selectedDateTime);
 
     final hijri = JHijri(fDate: selectedDateTime);
-
+    String hijriMonth = "h${hijri.month}".tr;
     return [
-      dayName,
-      "${hijri.year} ${hijri.monthName} ${hijri.day}",
-      "$day $month $year"
+      dayName.tr,
+      "${hijri.day} $hijriMonth ${hijri.year}",
+      "$day ${month.tr} $year"
     ];
   }
 
@@ -376,13 +376,13 @@ class _PrayerScreenState extends State<PrayerScreen> {
                 for (String text in _getFormattedDate(currentIndex))
                   Text(
                     text,
-                    style: TITLE_STYLE,
-                    textDirection: ui.TextDirection.ltr,
+                    style: const TextStyle(
+                        fontSize: 18.5, fontWeight: FontWeight.bold),
                   ),
               ],
             ),
             IconButton(
-              icon: Icon(Icons.arrow_right),
+              icon: const Icon(Icons.arrow_right),
               onPressed: () {
                 _navigateToDay(1);
               },
@@ -418,7 +418,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
             for (String text in _getFormattedDate(currentIndex))
               Text(
                 text,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 18.5, fontWeight: FontWeight.bold),
               ),
           ],
         ),

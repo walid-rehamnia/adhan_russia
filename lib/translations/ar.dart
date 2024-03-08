@@ -52,5 +52,42 @@ class Ar {
         translation.ru: "الروسية",
         translation.loading: "جاري التحميل ...",
         translation.done: "تم",
+
+        // Arabic months
+        translation.january: "يناير",
+        translation.february: "فبراير",
+        translation.march: "مارس",
+        translation.april: "إبريل",
+        translation.may: "مايو",
+        translation.june: "يونيو",
+        translation.july: "يوليو",
+        translation.august: "أغسطس",
+        translation.september: "سبتمبر",
+        translation.october: "أكتوبر",
+        translation.november: "نوفمبر",
+        translation.december: "ديسمبر",
+
+// Arabic week days
+        translation.sunday: "الأحد",
+        translation.monday: "الاثنين",
+        translation.tuesday: "الثلاثاء",
+        translation.wednesday: "الأربعاء",
+        translation.thursday: "الخميس",
+        translation.friday: "الجمعة",
+        translation.saturday: "السبت",
+
+// Arabic Hijri months
+        translation.h1: "محرّم",
+        translation.h2: "صفر",
+        translation.h3: "ربيع الأول",
+        translation.h4: "ربيع الآخر",
+        translation.h5: "جمادى الأولى",
+        translation.h6: "جمادى الآخرة",
+        translation.h7: "رجب",
+        translation.h8: "شعبان",
+        translation.h9: "رمضان",
+        translation.h10: "شوّال",
+        translation.h11: "ذو القعدة",
+        translation.h12: "ذو الحجة",
       };
 }

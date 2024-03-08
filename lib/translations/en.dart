@@ -54,5 +54,41 @@ class En {
         translation.ru: "Russian",
         translation.loading: "Loading ...",
         translation.done: "done",
+
+//eng months
+        translation.january: "January",
+        translation.february: "February",
+        translation.march: "March",
+        translation.april: "April",
+        translation.may: "May",
+        translation.june: "June",
+        translation.july: "July",
+        translation.august: "August",
+        translation.september: "September",
+        translation.october: "October",
+        translation.november: "November",
+        translation.december: "December",
+//Week days
+
+        translation.sunday: "Sunday",
+        translation.monday: "Monday",
+        translation.tuesday: "Tuesday",
+        translation.wednesday: "Wednesday",
+        translation.thursday: "Thursday",
+        translation.friday: "Friday",
+        translation.saturday: "Saturday",
+        //Hijri months
+        translation.h1: "Muharram",
+        translation.h2: "Safar",
+        translation.h3: "Rabi' al-Awwal",
+        translation.h4: "Rabi' al-Thani",
+        translation.h5: "Jumada al-Awwal",
+        translation.h6: "Jumada al-Thani",
+        translation.h7: "Rajab",
+        translation.h8: "Sha'ban",
+        translation.h9: "Ramadan",
+        translation.h10: "Shawwal",
+        translation.h11: "Dhu al-Qi'dah",
+        translation.h12: "Dhu al-Hijjah",
       };
 }
