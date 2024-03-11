@@ -92,7 +92,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 activeColor: Colors.black,
                 onChanged: (value) async {
                   EasyLoading.show(status: 'loading'.tr);
-                  await setTimeMode("custom");
+                  try {
+                    await setTimeMode("custom");
+                  } catch (e) {
+                    EasyLoading.showError(
+                        'Error, check internet connection and try again');
+                  }
                   EasyLoading.showSuccess('done'.tr);
                   EasyLoading.dismiss();
                   setState(() {
@@ -109,7 +114,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 activeColor: Colors.black,
                 onChanged: (value) async {
                   EasyLoading.show(status: 'loading'.tr);
-                  await setTimeMode("standard");
+                  try {
+                    await setTimeMode("standard");
+                  } catch (e) {
+                    EasyLoading.showError(
+                        'Error, check internet connection and try again');
+                  }
                   EasyLoading.showSuccess('done'.tr);
                   setState(() {
                     selectedRadio = value!;
@@ -201,7 +211,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: TextButton.icon(
                   onPressed: () async {
                     EasyLoading.show(status: 'loading'.tr);
-                    await updateUserLocation();
+                    try {
+                      await updateUserLocation();
+                    } catch (e) {
+                      EasyLoading.showError(
+                          "Error, Check internet connection and try again");
+                    }
                     EasyLoading.showSuccess('done'.tr);
                     EasyLoading.dismiss();
                   },

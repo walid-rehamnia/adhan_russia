@@ -9,6 +9,7 @@ import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/pdf_page.dart';
 import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jhijri/_src/_jHijri.dart';
@@ -31,27 +32,32 @@ class _PrayerScreenState extends State<PrayerScreen> {
 
   @override
   void initState() {
-    super.initState();
-    _preferencesController = Get.find<PreferencesController>();
-    if (_preferencesController.timingMode.value == 'custom') {
-      _prayerSchedule = CustomPrayerSchedule();
-    } else {
-      _prayerSchedule = StandardPrayerSchedule();
-    }
+    try {
+      super.initState();
+      _preferencesController = Get.find<PreferencesController>();
+      if (_preferencesController.timingMode.value == 'custom') {
+        _prayerSchedule = CustomPrayerSchedule();
+      } else {
+        _prayerSchedule = StandardPrayerSchedule();
+      }
 
-    _prayerSchedule.init(DateTime.now()).then((value) {
-      _prayerSchedule.update();
-      prayers = _prayerSchedule.prayers;
+      _prayerSchedule.init(DateTime.now()).then((value) {
+        _prayerSchedule.update();
+        prayers = _prayerSchedule.prayers;
 
-      isTodayCalendar = DateTime.now().day == _prayerSchedule.calendarDate.day;
-      setState(() {
-        isLoading = false;
+        isTodayCalendar =
+            DateTime.now().day == _prayerSchedule.calendarDate.day;
+        setState(() {
+          isLoading = false;
+        });
+
+        // Update state every min
+        timer = Timer.periodic(
+            const Duration(seconds: 1), (Timer t) => _update(_prayerSchedule));
       });
-
-      // Update state every min
-      timer = Timer.periodic(
-          const Duration(seconds: 1), (Timer t) => _update(_prayerSchedule));
-    });
+    } catch (e) {
+      EasyLoading.showError("Error, check your internet connection please");
+    }
   }
 
   // Index to keep track of the current day
@@ -291,6 +297,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
     } catch (e) {
       // Handle errors here
       print("Error updating timer: $e");
+      EasyLoading.showError("Error, check your internet connection please");
 
       // Show an AlertDialog with the error message
       showDialog(

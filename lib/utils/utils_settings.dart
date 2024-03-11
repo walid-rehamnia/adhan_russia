@@ -8,34 +8,39 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Future<void> setTimeMode(String mode) async {
-  final PreferencesController preferencesController =
-      Get.find<PreferencesController>();
-  late final String location;
-  if (mode == "standard") {
-    final Coordinates coordinates = await getCoordinates();
-    //get location address based by giving coordinates
-    location = await getCoordinatesAddress(
-        coordinates.latitude, coordinates.longitude);
-    if (preferencesController.calculationMethod.isEmpty) {
-      setCalculationMethod("north_america");
+  try {
+    final PreferencesController preferencesController =
+        Get.find<PreferencesController>();
+    late final String location;
+    if (mode == "standard") {
+      final Coordinates coordinates = await getCoordinates();
+      //get location address based by giving coordinates
+      location = await getCoordinatesAddress(
+          coordinates.latitude, coordinates.longitude);
+      if (preferencesController.calculationMethod.isEmpty) {
+        setCalculationMethod("north_america");
+      }
     }
-  }
-  //else custom mode
-  else {
-    location = "Nizhny Novgorod, Russia";
-  }
+    //else custom mode
+    else {
+      location = "Nizhny Novgorod, Russia";
+    }
 //I will download in both case, so the user has not to wait the download later (specially if he havn't connection)
-  await checkFirstInstallation();
+    await checkFirstInstallation();
 
-  preferencesController.updatePreference("userLocation", location);
+    preferencesController.updatePreference("userLocation", location);
 
-  preferencesController.updatePreference("timingMode", mode);
+    preferencesController.updatePreference("timingMode", mode);
 
-  PermissionStatus status = await Permission.notification.request();
-  if (status.isGranted) {
-    print("Great!, you'll be notified about the incoming prayers");
-  } else {
-    print("Unfortunately!, you  won't be notified about the incoming prayers");
+    PermissionStatus status = await Permission.notification.request();
+    if (status.isGranted) {
+      print("Great!, you'll be notified about the incoming prayers");
+    } else {
+      print(
+          "Unfortunately!, you  won't be notified about the incoming prayers");
+    }
+  } catch (e) {
+    throw Exception(e);
   }
 }
 
@@ -59,19 +64,24 @@ void updateDefaultLanguage(String? newLanguage) {
 }
 
 Future<String> updateUserLocation() async {
-  Position position = await getGPSPosition();
+  try {
+    Position position = await getGPSPosition();
 
-  PreferencesController preferencesController =
-      Get.find<PreferencesController>();
+    PreferencesController preferencesController =
+        Get.find<PreferencesController>();
 
-  preferencesController.updatePreference('positionLatitude', position.latitude);
-  preferencesController.updatePreference(
-      'positionLongitude', position.longitude);
+    preferencesController.updatePreference(
+        'positionLatitude', position.latitude);
+    preferencesController.updatePreference(
+        'positionLongitude', position.longitude);
 
-  String address =
-      await getCoordinatesAddress(position.latitude, position.longitude);
+    String address =
+        await getCoordinatesAddress(position.latitude, position.longitude);
 
-  return address;
+    return address;
+  } catch (e) {
+    throw Exception(e);
+  }
 }
 
 void setCalculationMethod(String calculationMethod) {

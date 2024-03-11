@@ -39,7 +39,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                     EasyLoading.dismiss();
                     Get.to(() => MyBottomNavigationBar());
                   } catch (e) {
-                    EasyLoading.showError('$e');
+                    EasyLoading.showError(
+                        'Error, check your internet and try again');
                     EasyLoading.dismiss();
                   }
                 },
@@ -57,7 +58,8 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                     EasyLoading.dismiss();
                     Get.to(() => MyBottomNavigationBar());
                   } catch (e) {
-                    EasyLoading.showError('$e');
+                    EasyLoading.showError(
+                        'Error, check your internet and try again');
                     EasyLoading.dismiss();
                   }
                 },
