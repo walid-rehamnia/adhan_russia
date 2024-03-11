@@ -1,12 +1,9 @@
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/controllers.dart';
-import 'package:adan_russia/screens/about_page.dart';
-import 'package:adan_russia/screens/choice_screen.dart';
 
 import 'package:adan_russia/screens/prayer_screen.dart';
 
 import 'package:adan_russia/screens/settings.dart';
-import 'package:adan_russia/screens/test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +19,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final List<Widget> pages = [
     const PrayerScreen(),
     SettingsScreen(),
-    ChoiceScreen()
+    // ChoiceScreen()
   ];
 
   @override
@@ -45,10 +42,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             ),
             label: "settings".tr,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.edit_notifications_rounded),
-            label: 'about'.tr,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: const Icon(Icons.edit_notifications_rounded),
+          //   label: 'about'.tr,
+          // ),
         ],
         currentIndex: _controller.selectedIndex.value,
         onTap: (index) {
