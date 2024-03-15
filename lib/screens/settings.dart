@@ -95,8 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   try {
                     await setTimeMode("custom").timeout(ASYNC_TIME_OUT);
                   } catch (e) {
-                    EasyLoading.showError(
-                        'Error, check internet connection and try again');
+                    EasyLoading.showError('internetError'.tr);
                   }
                   EasyLoading.showSuccess('done'.tr);
                   EasyLoading.dismiss();
@@ -117,8 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   try {
                     await setTimeMode("standard").timeout(ASYNC_TIME_OUT);
                   } catch (e) {
-                    EasyLoading.showError(
-                        'Error, check internet connection and try again');
+                    EasyLoading.showError('internetError'.tr);
                   }
                   EasyLoading.showSuccess('done'.tr);
                   setState(() {
@@ -216,8 +214,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       try {
                         await updateUserLocation().timeout(ASYNC_TIME_OUT);
                       } catch (e) {
-                        EasyLoading.showError(
-                            "Error, Check internet connection and try again");
+                        EasyLoading.showError("internetError".tr);
                       }
                       EasyLoading.showSuccess('done'.tr);
                       EasyLoading.dismiss();

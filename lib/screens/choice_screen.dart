@@ -34,13 +34,12 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   EasyLoading.show(status: 'loading'.tr);
 
                   try {
-                    await setTimeMode('standard');
+                    await setTimeMode('standard').timeout(ASYNC_TIME_OUT);
                     EasyLoading.showSuccess('done'.tr);
                     EasyLoading.dismiss();
                     Get.to(() => MyBottomNavigationBar());
                   } catch (e) {
-                    EasyLoading.showError(
-                        'Error, check your internet and try again');
+                    EasyLoading.showError('internetError'.tr);
                     EasyLoading.dismiss();
                   }
                 },
@@ -53,13 +52,12 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                   EasyLoading.show(status: 'loading'.tr);
 
                   try {
-                    await setTimeMode('custom');
+                    await setTimeMode('custom').timeout(ASYNC_TIME_OUT);
                     EasyLoading.showSuccess('done'.tr);
                     EasyLoading.dismiss();
                     Get.to(() => MyBottomNavigationBar());
                   } catch (e) {
-                    EasyLoading.showError(
-                        'Error, check your internet and try again');
+                    EasyLoading.showError('internetError'.tr);
                     EasyLoading.dismiss();
                   }
                 },

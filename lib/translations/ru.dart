@@ -92,5 +92,12 @@ class Ru {
         translation.h10: "Шауваль",
         translation.h11: "Ду аль-Кида",
         translation.h12: "Ду аль-Хиджа",
+
+        translation.internetError:
+            "Проверьте свое подключение к Интернету, затем повторите попытку",
+
+        translation.aboutText: "Мы ценим ваши отзывы!",
+        translation.rateBtn: "Оцените нас",
+        translation.askBtn: "Задавайте вопросы / получайте поддержку",
       };
 }

@@ -49,6 +49,8 @@ const schedulePassed = "schedulePassed";
 
 const about = 'about';
 
+const internetError = 'internetError';
+
 const january = 'January';
 const february = 'February';
 const march = 'March';
@@ -82,3 +84,8 @@ const h9 = 'h9';
 const h10 = 'h10';
 const h11 = 'h11';
 const h12 = 'h12';
+
+const aboutTitle = "aboutTitle";
+const aboutText = "aboutText";
+const rateBtn = "rateBtn";
+const askBtn = "askBtn";

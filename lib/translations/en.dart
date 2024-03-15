@@ -41,6 +41,9 @@ class En {
         translation.umm_al_qura: "Umm Al Qura",
         translation.other: "Other",
 
+        translation.internetError:
+            "Check you Internet connection, then try again",
+
         // translation.currentLocation: "Current location : @location",
         translation.currentLocation: "Current location :",
 
@@ -90,5 +93,9 @@ class En {
         translation.h10: "Shawwal",
         translation.h11: "Dhu al-Qi'dah",
         translation.h12: "Dhu al-Hijjah",
+
+        translation.aboutText: "We appreciate your feedback!",
+        translation.rateBtn: "Rate us",
+        translation.askBtn: "Ask Questions / Get Support",
       };
 }

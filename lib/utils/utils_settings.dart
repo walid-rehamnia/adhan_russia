@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 Future<void> setTimeMode(String mode) async {
   try {
+    print('***************');
     final PreferencesController preferencesController =
         Get.find<PreferencesController>();
     late final String location;
@@ -27,7 +28,10 @@ Future<void> setTimeMode(String mode) async {
       location = "Nizhny Novgorod, Russia";
     }
 //I will download in both case, so the user has not to wait the download later (specially if he havn't connection)
+    print('***************');
+
     await checkFirstInstallation();
+    print('***************');
 
     preferencesController.updatePreference("userLocation", location);
 
@@ -41,6 +45,7 @@ Future<void> setTimeMode(String mode) async {
           "Unfortunately!, you  won't be notified about the incoming prayers");
     }
   } catch (e) {
+    print('TimeMode ex########################################');
     throw Exception(e);
   }
 }

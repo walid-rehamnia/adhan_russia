@@ -89,5 +89,11 @@ class Ar {
         translation.h10: "شوّال",
         translation.h11: "ذو القعدة",
         translation.h12: "ذو الحجة",
+
+        translation.internetError: "تحقق من الإنترنت، ثم حاول مجددا",
+        // translation.aboutTitle: "أذان روسيا",
+        translation.aboutText: "نحن نقدر ملاحظاتك!",
+        translation.rateBtn: "قم بتقييم التطبيق",
+        translation.askBtn: "إطرح سؤال/ أحصل على دعم",
       };
 }
