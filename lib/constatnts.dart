@@ -62,3 +62,5 @@ const TextStyle TITLE_STYLE = TextStyle(
 );
 
 const String APP_NAME = "Adhan Russia";
+
+const Duration ASYNC_TIME_OUT = Duration(seconds: 5);

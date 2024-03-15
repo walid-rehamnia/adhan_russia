@@ -93,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (value) async {
                   EasyLoading.show(status: 'loading'.tr);
                   try {
-                    await setTimeMode("custom");
+                    await setTimeMode("custom").timeout(ASYNC_TIME_OUT);
                   } catch (e) {
                     EasyLoading.showError(
                         'Error, check internet connection and try again');
@@ -115,7 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (value) async {
                   EasyLoading.show(status: 'loading'.tr);
                   try {
-                    await setTimeMode("standard");
+                    await setTimeMode("standard").timeout(ASYNC_TIME_OUT);
                   } catch (e) {
                     EasyLoading.showError(
                         'Error, check internet connection and try again');
@@ -203,53 +203,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 thickness: 0.5,
               ),
               const SizedBox(height: 10),
-              Text(
-                'currentLocation'.tr,
-                style: TITLE_STYLE,
-              ),
-              Center(
-                child: TextButton.icon(
-                  onPressed: () async {
-                    EasyLoading.show(status: 'loading'.tr);
-                    try {
-                      await updateUserLocation();
-                    } catch (e) {
-                      EasyLoading.showError(
-                          "Error, Check internet connection and try again");
-                    }
-                    EasyLoading.showSuccess('done'.tr);
-                    EasyLoading.dismiss();
-                  },
-                  icon: const Icon(
-                      color: Colors.black,
-                      Icons
-                          .edit_location_alt_sharp), // Replace with your desired icon
-                  label: Text(
-                    _preferencesController.userLocation.value,
-                    style: const TextStyle(
-                        fontFamily: 'Amiri',
+              if (selectedRadio == "standard")
+                Text(
+                  'currentLocation'.tr,
+                  style: TITLE_STYLE,
+                ),
+              if (selectedRadio == "standard")
+                Center(
+                  child: TextButton.icon(
+                    onPressed: () async {
+                      EasyLoading.show(status: 'loading'.tr);
+                      try {
+                        await updateUserLocation().timeout(ASYNC_TIME_OUT);
+                      } catch (e) {
+                        EasyLoading.showError(
+                            "Error, Check internet connection and try again");
+                      }
+                      EasyLoading.showSuccess('done'.tr);
+                      EasyLoading.dismiss();
+                    },
+                    icon: const Icon(
                         color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  style: TextButton.styleFrom(
-                    backgroundColor: MAIN_COLOR, // Set the background color
+                        Icons
+                            .edit_location_alt_sharp), // Replace with your desired icon
+                    label: Text(
+                      _preferencesController.userLocation.value,
+                      style: const TextStyle(
+                          fontFamily: 'Amiri',
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: MAIN_COLOR, // Set the background color
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
       ),
     ));
   }
-}
-
-Future<String> fakeAsyncOperation(int seconds) async {
-  print('fakeAsyncOperation started');
-  // Simulating some asynchronous operation, such as fetching data from a server
-  await Future.delayed(Duration(seconds: seconds));
-  print('fakeAsyncOperation finished');
-  // Returning a result once the operation is complete
-  return 'Fake data from async operation';
 }

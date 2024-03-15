@@ -56,7 +56,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
             const Duration(seconds: 1), (Timer t) => _update(_prayerSchedule));
       });
     } catch (e) {
-      EasyLoading.showError("Error, check your internet connection please");
+      EasyLoading.showError("Error, $e");
     }
   }
 
@@ -288,16 +288,19 @@ class _PrayerScreenState extends State<PrayerScreen> {
 
   void _update(PrayerSchedule prayerSchedule) {
     try {
-      setState(() {
-        prayerSchedule.update();
-        isTodayCalendar = DateTime.now().day == prayerSchedule.calendarDate.day;
-        // print(
-        //     "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
-      });
+      if (this.mounted) {
+        setState(() {
+          prayerSchedule.update();
+          isTodayCalendar =
+              DateTime.now().day == prayerSchedule.calendarDate.day;
+          // print(
+          //     "Update now with next prayer${prayerSchedule.nextPrayer.name} current prayer ${prayerSchedule.currentPrayer.name} reminded time ${prayerSchedule.getRemainingTime()}");
+        });
+      }
     } catch (e) {
       // Handle errors here
       print("Error updating timer: $e");
-      EasyLoading.showError("Error, check your internet connection please");
+      EasyLoading.showError("Error, $e");
 
       // Show an AlertDialog with the error message
       showDialog(

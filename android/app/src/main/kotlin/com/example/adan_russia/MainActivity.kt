@@ -1,4 +1,4 @@
-package com.example.adan_russia
+package com.rehamnia.adan_russia
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,3 +1,4 @@
+import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/utils/utils_location.dart';
 import 'package:adan_russia/utils/utils_data.dart';
@@ -65,7 +66,9 @@ void updateDefaultLanguage(String? newLanguage) {
 
 Future<String> updateUserLocation() async {
   try {
-    Position position = await getGPSPosition();
+    print('------------------------');
+    Position position = await getGPSPosition().timeout(ASYNC_TIME_OUT);
+    print('------------------------');
 
     PreferencesController preferencesController =
         Get.find<PreferencesController>();
@@ -74,12 +77,15 @@ Future<String> updateUserLocation() async {
         'positionLatitude', position.latitude);
     preferencesController.updatePreference(
         'positionLongitude', position.longitude);
+    print('##############################################');
 
     String address =
-        await getCoordinatesAddress(position.latitude, position.longitude);
+        await getCoordinatesAddress(position.latitude, position.longitude)
+            .timeout(ASYNC_TIME_OUT);
 
     return address;
   } catch (e) {
+    print('##############################################');
     throw Exception(e);
   }
 }
