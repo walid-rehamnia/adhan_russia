@@ -113,7 +113,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                       height: 30,
                     ),
                     Container(
-                      width: containerWidth / 3,
+                      width: containerWidth / 2,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         image: DecorationImage(
