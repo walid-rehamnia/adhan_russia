@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class AboutScreen extends StatefulWidget {
   @override
@@ -59,11 +60,20 @@ class _AboutScreenState extends State<AboutScreen> {
                 }
                 EasyLoading.dismiss();
               }),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               myButton(Icons.rate_review_rounded, "rateBtn".tr, () async {
                 // Open Play Store for rating
                 await _launchURL(playStoreUrl);
               }),
+              const SizedBox(height: 50),
+
+              QrImageView(
+                data: playStoreUrl,
+                version: QrVersions.auto,
+                size: 250.0,
+                backgroundColor: MAIN_COLOR,
+                // foregroundColor: MAIN_COLOR,
+              ),
               // ElevatedButton(
               //   onPressed: () {
               //     // Share the app
