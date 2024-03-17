@@ -1,5 +1,6 @@
 import 'package:adan_russia/constatnts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -81,6 +82,11 @@ class _AboutScreenState extends State<AboutScreen> {
               //   },
               //   child: Text("Share $appName"),
               // ),
+              ElevatedButton(
+                  onPressed: () {
+                    FlutterBackgroundService().invoke("setAsBackground");
+                  },
+                  child: const Text('serice')),
             ],
           ),
         ),

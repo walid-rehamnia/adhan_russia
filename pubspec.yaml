@@ -62,7 +62,9 @@ dependencies:
   flutter_easyloading: ^3.0.5
   url_launcher: ^6.2.5
   qr_flutter: ^4.1.0
-  flutter_background: ^1.2.0
+  # flutter_background: ^1.2.0
+  flutter_background_service: ^5.0.5
+  flutter_background_service_android: ^6.2.2
   # url_launcher: ^6.2.5
   # share_plus: ^7.2.2
 

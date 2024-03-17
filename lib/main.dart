@@ -1,3 +1,4 @@
+import 'package:adan_russia/back_services.dart';
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/preferences.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -28,6 +30,10 @@ Future<void> main() async {
 
   initDefaultLanguage();
 
+  await Permission.notification.isDenied.then((value) => {
+        if (value) {Permission.notification.request()}
+      });
+  // await initializeMyService();
   runApp(const MyApp());
 }
 
