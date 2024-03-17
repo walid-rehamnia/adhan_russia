@@ -1,4 +1,4 @@
-import 'package:adan_russia/components.dart';
+import 'package:adan_russia/screens/bottom_navigation.dart';
 import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/choice_screen.dart';
 import 'package:adan_russia/screens/progress_loading.dart';
