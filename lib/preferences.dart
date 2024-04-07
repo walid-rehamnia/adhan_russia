@@ -8,6 +8,7 @@ class PreferencesController extends GetxController {
 //PrayerSchedule
   RxString calendarYear = ''.obs;
   RxString calendarMonthlyData = ''.obs;
+  RxInt currentMonth = 0.obs;
 
   RxString defaultLanguage = ''.obs;
   RxString userLocation = ''.obs;
@@ -34,6 +35,8 @@ class PreferencesController extends GetxController {
 
     calendarMonthlyData.value = prefs.getString('calendarMonthlyData') ?? '';
     calculationMethod.value = prefs.getString('CalculationMethod') ?? '';
+
+    currentMonth.value = prefs.getInt('currentMonth') ?? 0;
 
     defaultLanguage.value = prefs.getString('defaultLanguage') ?? '';
     userLocation.value = prefs.getString('userLocation') ?? '';
@@ -73,6 +76,9 @@ class PreferencesController extends GetxController {
         break;
       case "calendarMonthlyData":
         calendarMonthlyData.value = value;
+        break;
+      case "currentMonth":
+        currentMonth.value = value;
         break;
       case "defaultLanguage":
         defaultLanguage.value = value;

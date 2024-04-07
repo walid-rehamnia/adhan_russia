@@ -15,13 +15,9 @@ class CustomPrayerSchedule extends PrayerSchedule {
   }
 
   Future<void> init(DateTime date) async {
+    calendarDate = date;
     final PreferencesController _preferencesController =
         Get.find<PreferencesController>();
-
-    calendarDate = date;
-    //Next 2 indexes used to retrieve data from 0 based index data  structures
-    int currentMonthIndex = calendarDate.month - 1;
-    int currentDayIndex = calendarDate.day - 1;
 
     //Download calendar if doesn't exist/expired
     String year = _preferencesController.calendarYear.value;
@@ -34,17 +30,21 @@ class CustomPrayerSchedule extends PrayerSchedule {
     //Load current month data if it doesn't exist
     String jsonData = _preferencesController.calendarMonthlyData.value;
     print(jsonData.runtimeType);
-    if (jsonData == "") {
+    if (jsonData == "" ||
+        _preferencesController.currentMonth.value != calendarDate.month) {
       //delete the old data if exists (meory best practice and avoid confusion with other year same month)
       //load the yearly data from json file
       List<List<List<String>>> yearlyData = await loadYearlyData();
       //select the current month data and save it to presistent storage
-      List<List<String>> monthlyData = yearlyData[currentMonthIndex];
+      List<List<String>> monthlyData = yearlyData[calendarDate.month - 1];
       jsonData = jsonEncode(monthlyData);
       print(jsonData.runtimeType);
 
       _preferencesController.updatePreference("calendarMonthlyData", jsonData);
+      _preferencesController.updatePreference(
+          "currentMonth", calendarDate.month);
     }
+    print(_preferencesController.currentMonth.value);
     //get daily times from monthly saved data
     List<dynamic> decodedData = jsonDecode(jsonData);
     print(jsonData.runtimeType);
@@ -54,7 +54,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
             .map((element) => element.toString())
             .toList())
         .toList();
-    List<String> todayTimes = decodedData[currentDayIndex];
+    List<String> todayTimes = decodedData[calendarDate.day - 1];
 
     //ensure the avoidness of prayers before adding to it
     prayers.clear();
