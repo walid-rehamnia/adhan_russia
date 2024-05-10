@@ -1,5 +1,6 @@
 import 'dart:async';
 
+// import 'package:adan_russia/back_services.dart';
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/models/standard_prayer_schedule.dart';
 import 'package:adan_russia/models/prayer.dart';
@@ -9,6 +10,7 @@ import 'package:adan_russia/preferences.dart';
 import 'package:adan_russia/screens/pdf_page.dart';
 import 'package:adan_russia/screens/progress_loading.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -42,6 +44,8 @@ class _PrayerScreenState extends State<PrayerScreen> {
       }
 
       _prayerSchedule.init(DateTime.now()).then((value) {
+        _preferencesController.prayerSchedule = _prayerSchedule;
+        // initializeService().then((value) => {});
         _prayerSchedule.update();
         prayers = _prayerSchedule.prayers;
 
@@ -52,8 +56,10 @@ class _PrayerScreenState extends State<PrayerScreen> {
         });
 
         // Update state every min
-        timer = Timer.periodic(
-            const Duration(seconds: 1), (Timer t) => _update(_prayerSchedule));
+
+        // FlutterBackgroundService().startService();
+        timer = Timer.periodic(const Duration(seconds: 1),
+            (Timer t) => updateTimes(_prayerSchedule));
       });
     } catch (e) {
       EasyLoading.showError("Error, $e");
@@ -278,7 +284,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
                             ),
                           ],
                         )),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -286,11 +292,12 @@ class _PrayerScreenState extends State<PrayerScreen> {
     );
   }
 
-  void _update(PrayerSchedule prayerSchedule) {
+  void updateTimes(PrayerSchedule prayerSchedule) {
     try {
-      if (this.mounted) {
+      prayerSchedule.update();
+
+      if (mounted) {
         setState(() {
-          prayerSchedule.update();
           isTodayCalendar =
               DateTime.now().day == prayerSchedule.calendarDate.day;
           // print(

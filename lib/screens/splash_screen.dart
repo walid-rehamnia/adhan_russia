@@ -37,16 +37,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(snapshot.error.toString()),
-                    duration: Duration(seconds: 3),
+                    duration: const Duration(seconds: 3),
                   ),
                 );
                 return Text('Error: ${snapshot.error}');
               } else {
                 if (snapshot.hasData && snapshot.data.toString() != "") {
-                  print(snapshot.data.toString());
-                  return MyBottomNavigationBar();
+                  // print(snapshot.data.toString());
+                  return const MyBottomNavigationBar();
                 } else {
-                  return ChoiceScreen();
+                  return const ChoiceScreen();
                 }
               }
             },

@@ -1,4 +1,8 @@
 // import 'package:adan_russia/back_services.dart';
+import 'dart:async';
+import 'dart:ui';
+
+// import 'package:adan_russia/back_services.dart';
 import 'package:adan_russia/constatnts.dart';
 import 'package:adan_russia/prayer_notification.dart';
 import 'package:adan_russia/preferences.dart';
@@ -6,12 +10,15 @@ import 'package:adan_russia/screens/splash_screen.dart';
 import 'package:adan_russia/translations/my_translation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'firebase_options.dart';
+
+final service = FlutterBackgroundService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +41,7 @@ Future<void> main() async {
         if (value) {Permission.notification.request()}
       });
   // await initializeMyService();
+  // await initializeService();
   runApp(const MyApp());
 }
 

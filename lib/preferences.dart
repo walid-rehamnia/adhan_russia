@@ -1,4 +1,5 @@
-import 'package:adhan/adhan.dart';
+// import 'package:adan_russia/models/custom_prayer_schedule.dart';
+import 'package:adan_russia/models/prayer_schedule.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +20,8 @@ class PreferencesController extends GetxController {
 
   RxBool isNotifyAdhan = true.obs;
   RxBool isNotifyIqama = true.obs;
+
+  late PrayerSchedule prayerSchedule;
 
   @override
   void onInit() async {

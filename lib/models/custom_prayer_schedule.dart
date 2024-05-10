@@ -29,7 +29,6 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
     //Load current month data if it doesn't exist
     String jsonData = _preferencesController.calendarMonthlyData.value;
-    print(jsonData.runtimeType);
     if (jsonData == "" ||
         _preferencesController.currentMonth.value != calendarDate.month) {
       //delete the old data if exists (meory best practice and avoid confusion with other year same month)
@@ -38,16 +37,13 @@ class CustomPrayerSchedule extends PrayerSchedule {
       //select the current month data and save it to presistent storage
       List<List<String>> monthlyData = yearlyData[calendarDate.month - 1];
       jsonData = jsonEncode(monthlyData);
-      print(jsonData.runtimeType);
 
       _preferencesController.updatePreference("calendarMonthlyData", jsonData);
       _preferencesController.updatePreference(
           "currentMonth", calendarDate.month);
     }
-    print(_preferencesController.currentMonth.value);
     //get daily times from monthly saved data
     List<dynamic> decodedData = jsonDecode(jsonData);
-    print(jsonData.runtimeType);
 
     decodedData = decodedData
         .map((innerList) => (innerList as List<dynamic>)
@@ -73,16 +69,16 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
     outerLoop:
     for (i = 0; i < prayers.length; i++) {
-      print('foor $i');
+      // print('foor $i');
       hours = int.parse(prayers[i].time.split(":")[0]);
       minutes = int.parse(prayers[i].time.split(":")[1]);
 
       difference = getDifference(now.hour, now.minute, hours, minutes);
-      print("${prayers[i].name}: $difference");
+      // print("${prayers[i].name}: $difference");
       switch (difference) {
         case <= IQAMA_TIME_OUT && >= 0:
           {
-            print('case <= IQAMA_TIME_OUT && >= 0');
+            // print('case <= IQAMA_TIME_OUT && >= 0');
 
             currentPrayer = prayers[i];
             currentPrayer.status = "now";
@@ -98,7 +94,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
           break outerLoop;
         case < 0:
           {
-            print('case <0');
+            // print('case <0');
 
             currentPrayer =
                 i > 0 ? prayers[i - 1] : prayers[prayers.length - 1];
@@ -108,7 +104,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
 
         case > IQAMA_TIME_OUT:
           {
-            print('case > IQAMA_TIME_OUT');
+            // print('case > IQAMA_TIME_OUT');
 
             prayers[i].status = "passed";
           }
@@ -116,7 +112,7 @@ class CustomPrayerSchedule extends PrayerSchedule {
     }
 
     if (i == prayers.length) {
-      print('after isha before 00:00');
+      // print('after isha before 00:00');
       currentPrayer = prayers[prayers.length - 1];
       nextPrayer = prayers[0];
 

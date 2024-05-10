@@ -82,11 +82,32 @@ class _AboutScreenState extends State<AboutScreen> {
               //   },
               //   child: Text("Share $appName"),
               // ),
-              ElevatedButton(
-                  onPressed: () {
-                    FlutterBackgroundService().invoke("setAsBackground");
-                  },
-                  child: const Text('serice')),
+              // ElevatedButton(
+              //     onPressed: () async {
+              //       final service = FlutterBackgroundService();
+              //       service.invoke("setAsBackground");
+              //       var isRunning = await service.isRunning();
+              //       if (isRunning) {
+              //         service.invoke("stopService");
+              //       } else {
+              //         service.startService();
+              //       }
+
+              //       if (!isRunning) {
+              //         print('Stoppppppppppppppp');
+              //         // text = 'Stop Service';
+              //       } else {
+              //         // text = 'Start Service';
+              //         print('Starttttttttttttttt');
+              //       }
+              //       setState(() {});
+              //     },
+
+              //     // {
+              //     //   service.startService();
+              //     //   // FlutterBackgroundService().invoke("setAsBackground");
+              //     // },
+              //     child: const Text('serice')),
             ],
           ),
         ),
